@@ -1,0 +1,29 @@
+{
+  "name": "SocketLogger",
+  "version": "0.0.1",
+  "description": "Common Remote Logging",
+  "main": "main_process/main.js",
+  "scripts": {
+    "start": "electron .",
+    "packageall": "electron-packager ./ --platform=win32,linux --arch=x64 --out=../dist --overwrite --icon=ansysicon",
+    "packagelinux": "electron-packager ./ --platform=linux --arch=x64 --out=../dist --overwrite --icon=ansysicon",
+    "packagewindows": "electron-packager ./ --platform=win32 --arch=x64 --out=../dist --overwrite --icon=ansysicon"
+  },
+  "keywords": [
+    "logging",
+    "sockets",
+    "gui",
+    "utility"
+  ],
+  "author": "Jake Callery",
+  "devDependencies": {
+    "electron-packager": "10.1.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "6.26.0",
+    "electron": "1.8.1",
+    "electron-json-storage": "4.0.2",
+    "shortid": "2.2.8",
+    "winston": "2.4.0"
+  }
+}

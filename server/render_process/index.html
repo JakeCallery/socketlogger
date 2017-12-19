@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AEC Job Tool</title>
+    <link href="css/main.css" rel="stylesheet"/>
+    <style id="tabHelper"></style>
+</head>
+    <body
+            onmousedown="document.getElementById('tabHelper').innerHTML=''"
+            onkeydown="document.getElementById('tabHelper').innerHTML=
+            'button:focus{background:#69919B}' +
+             '.simpleCheckBox:focus{background:#69919B; outline:1px solid #69919B;}'"
+    >
+        <div class="mainDiv">
+            <header class="headerWrapper">
+                <h1 class="mainHeader">AEC Job Tool</h1>
+            </header>
+            <div class="actionButtonGroup">
+                <button id="connectButton" class="simpleButton" tabindex="1">Connect</button>
+                <button id="queryStatusButton" class="simpleButton" tabindex="2">Query Status</button>
+            </div>
+
+            <div class="jobStatusDiv">
+                <table id="jobTable" class="jobStatusTable">
+                    <tbody>
+                        <tr>
+                            <th >ID</th>
+                            <th>User</th>
+                            <th>State</th>
+                            <th>Submit Time</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="actionWrapperDiv">
+                <div class="killJobDiv">
+                    <input type="text" tabindex="3" id="jobIdField" class="jobIdInput" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                    <button tabindex="4" id="deleteJobButton" class="simpleButton">Delete</button>
+                    <label id="forceLabel" class="simpleCheckboxLabel"><input  type="checkbox" class="simpleCheckBox" id="forceDeleteCheckBox" tabindex="5">Force Delete (qdel -f)</label>
+                </div>
+            </div>
+
+            <div id="logDiv" class="logDiv">
+                <h3 class="loggingHeader">Logging</h3>
+                <textarea title="log" id="logTextArea" class="logTextArea" readonly tabindex="-1"></textarea>
+            </div>
+
+            <div id="buttonGroupDiv" class="buttonGroup">
+                <button class="simpleButton" id="copyLogButton" title="Copy Log" tabindex="6">
+                    Copy Log
+                </button>
+                <button class="simpleButton" id="clearLogButton" title="Clear Log" tabindex="7">
+                    Clear Log
+                </button>
+                <button class="simpleButton" id="debugButton" title="Debug View" tabindex="8">
+                    Debug View
+                </button>
+            </div>
+            <div class="checkBoxGroup">
+                <label class="simpleCheckboxLabel" tabindex="-1"><input  type="checkbox" class="simpleCheckBox" id="scrollLogCheckBox" checked tabindex="-1">Automatically Scroll Log</label>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        if (window.require) {
+            window.nodeRequire = require;
+            delete window.require;
+            delete window.exports;
+            delete window.module;
+        }
+
+    </script>
+
+    <script>
+        // You can also require other files to run in this process
+        //nodeRequire('../render_process/js/app/render_main.js')
+    </script>
+
+    <!-- htmlbuild:remove -->
+    <script src="js/config.js"></script>
+    <!-- endbuild -->
+
+    <script type="text/javascript">
+        //Async load RequireJS
+        (function () {
+            var sel = document.createElement('script');
+            sel.type = 'text/javascript';
+            sel.async = false;
+            //Use compiled by default
+            if (typeof USE_COMPILED != 'undefined' && USE_COMPILED === false) {
+                sel.setAttribute('data-main', 'render_main');
+                sel.src = 'js/libs/require.js';
+            }
+            else {
+                sel.src = 'js/compiled.js';
+            }
+
+            var firstTag = document.getElementsByTagName('script')[0];
+            firstTag.parentNode.insertBefore(sel, firstTag);
+        })();
+    </script>
+
+</html>
