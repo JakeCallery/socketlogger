@@ -91,6 +91,8 @@ function handleAppReady() {
     l.uiLoggerInstance.renderWindow = mainWindow;
 
     l.debug('Main Window Ready');
+
+    sm.initServer();
 }
 
 // This method will be called when Electron has finished
