@@ -36,7 +36,8 @@ let mainWindow;
 
 l.debug("User Data Path: " + app.getPath('userData'));
 
-
+//Setup Socket Manager
+let sm = require('./SocketManager');
 
 //Mange User Preferences
 ipcMain.on('requestPrefs', function($e){
@@ -87,7 +88,9 @@ function handleAppReady() {
         mainWindow = null
     });
 
-    //l.uiLoggerInstance.renderWindow = mainWindow;
+    l.uiLoggerInstance.renderWindow = mainWindow;
+
+    l.debug('Main Window Ready');
 }
 
 // This method will be called when Electron has finished
