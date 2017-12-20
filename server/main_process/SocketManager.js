@@ -23,13 +23,6 @@ class SocketManager extends EventEmitter {
     static get instance() {
         if(!this[singleton]) {
             this[singleton] = new SocketManager(singletonEnforcer);
-
-            this[singleton].isConnected = false;
-            this[singleton].connectCheckTimer = null;
-            this[singleton].commandList = [];
-            this[singleton].mainWindow = null;
-            this[singleton].server = null;
-
         }
         return this[singleton];
     }
