@@ -4,13 +4,29 @@ import socket
 
 
 class SocketHandler(logging.Handler):
-    def __init__(self, log_socket):
+    def __init__(self, socket_logger):
         super(SocketHandler, self).__init__()
-        self.log_socket = log_socket
+        self.socket_logger = socket_logger
 
     def emit(self, record):
         log_entry = self.format(record)
-        print("Socket: " + str(log_entry))
+        print("Sending to Socket: " + str(log_entry))
+        if self.socket_logger.log_socket is not None:
+            total_sent = 0
+            while total_sent < len(log_entry):
+                try:
+                    sent = self.socket_logger.log_socket.send(str(log_entry)[total_sent:])
+                except socket.error as se:
+                    print("Could not send: " + str(se))
+                    break
+
+                if sent == 0:
+                    raise RuntimeError("Socket Connection Broken")
+
+                total_sent = total_sent + sent
+
+                if sent != len(log_entry):
+                    print("Partial Message Sent: " + str(sent) + "/" + str(total_sent) + "/" + str(len(log_entry)))
 
 
 class SocketLogger:
@@ -19,6 +35,7 @@ class SocketLogger:
         self.logger = self.create_logger(logger_name)
         self.logger.setLevel(log_level)
         self.enabled = True
+        self.log_socket = None
 
     def log(self, message=""):
         self.logger.log(logging.DEBUG, message)
@@ -43,6 +60,7 @@ class SocketLogger:
         print("Creating Socket...")
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.log_socket = s
         except socket.error as e:
             print("Failed to create Socket: " + str(e))
             sys.exit()
@@ -61,7 +79,7 @@ class SocketLogger:
             print("Could not connect: " + str(e))
 
         #Set up log handler
-        socket_handler = SocketHandler(s)
+        socket_handler = SocketHandler(self)
         socket_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
         socket_handler.setLevel(self.log_level)
         self.logger.addHandler(socket_handler)
