@@ -14,9 +14,14 @@ class Client extends EventEmitter {
         });
 
         this.socket.on('end', ($e) => {
-            l.debug(this.socket.name + ' caught end');
+            l.debug(this.name + ' caught end');
             this.emit('end', $e);
         });
+
+        this.socket.on('error', ($e) => {
+            l.debug(this.name + ' error: ' + $e);
+            this.emit('remoteerrordisconnect', $e);
+        })
     }
 }
 

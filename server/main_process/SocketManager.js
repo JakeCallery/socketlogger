@@ -53,6 +53,12 @@ class SocketManager extends EventEmitter {
                 self.clients.splice(self.clients.indexOf(client), 1);
                 l.debug('Client List Length: ' + self.clients.length);
             });
+
+            client.on('remoteerrordisconnect', ($e) => {
+                l.debug('Caught Remote Disconnect, removing client: ' + client.name);
+                self.clients.splice(self.clients.indexOf(client), 1);
+                l.debug('Client List Length: ' + self.clients.length);
+            })
         });
 
         self.server.listen(8999, '0.0.0.0');
