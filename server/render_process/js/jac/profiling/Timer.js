@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-import TimeObject from 'jac/profiling/TimeObject';
-    export default (function(){
+define(['jac/profiling/TimeObject'],
+function(TimeObject){
+    return (function(){
        var Timer = {};
 
 	    Timer._times = {};
@@ -117,4 +118,4 @@ import TimeObject from 'jac/profiling/TimeObject';
         //Return constructor
         return Timer;
     })();
-
+});

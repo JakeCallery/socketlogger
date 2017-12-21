@@ -3,13 +3,15 @@
  * User: Jake
  */
 
-import EventDispatcher from 'jac/events/EventDispatcher';
-import ObjUtils from 'jac/utils/ObjUtils';
-import LoopStyle from 'jac/sprite/LoopStyle';
-import EventUtils from 'jac/utils/EventUtils';
-import L from 'jac/logger/Logger';
-import SequenceEvent from 'jac/sprite/events/SequenceEvent';
-    export default (function(){
+define([
+'jac/events/EventDispatcher',
+'jac/utils/ObjUtils',
+'jac/sprite/LoopStyle',
+'jac/utils/EventUtils',
+'jac/logger/Logger',
+'jac/sprite/events/SequenceEvent'],
+function(EventDispatcher,ObjUtils,LoopStyle,EventUtils,L,SequenceEvent){
+    return (function(){
         /**
          * Creates a SequenceManager object
          * @extends {EventDispatcher}
@@ -131,4 +133,4 @@ import SequenceEvent from 'jac/sprite/events/SequenceEvent';
         //Return constructor
         return SequenceManager;
     })();
-
+});

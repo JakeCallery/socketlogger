@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         var StringUtils = {};
 
 	    /**
@@ -169,4 +170,4 @@
         //Return constructor
         return StringUtils;
     })();
-
+});

@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         var BrowserUtils = {};
 
 	    /**
@@ -87,4 +88,4 @@
         //Return constructor
         return BrowserUtils;
     })();
-
+});

@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         var Matrix3x3Utils = {};
 
 	    Matrix3x3Utils.makeTranslation = function($tx, $ty){
@@ -145,4 +146,4 @@
         //Return constructor
         return Matrix3x3Utils;
     })();
-
+});

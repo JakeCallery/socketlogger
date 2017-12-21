@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
 
 	    var WebGLUtils = {};
 
@@ -181,4 +182,4 @@
         //Return constructor
         return WebGLUtils;
     })();
-
+});

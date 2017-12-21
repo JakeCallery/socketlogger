@@ -93,6 +93,9 @@ function handleAppReady() {
     l.debug('Main Window Ready');
 
     sm.initServer();
+    sm.on('newlogdata', ($e) => {
+        l.debug('Main Caught New Log Data: ', $e);
+    });
 }
 
 // This method will be called when Electron has finished

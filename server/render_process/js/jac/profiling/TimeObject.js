@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         /**
          * Creates a TimeObject object
          * @constructor
@@ -40,4 +41,4 @@
         //Return constructor
         return TimeObject;
     })();
-
+});

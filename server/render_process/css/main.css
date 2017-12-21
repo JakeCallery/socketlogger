@@ -1,0 +1,314 @@
+/*****************************************
+*** BASE ELEMENTS
+******************************************/
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #242424;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+}
+
+button {
+    cursor: pointer;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+}
+
+table {
+    outline: none;
+}
+
+th {
+    outline: none;
+}
+
+tr {
+    outline: none;
+}
+
+td {
+    outline: none;
+}
+
+
+/*****************************************
+*** DIVs
+******************************************/
+.mainDiv {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    position: relative;
+    width: 100%;
+}
+
+.buttonDiv {
+    margin-left: 22px;
+    margin-top: 15px;
+}
+
+.actionWrapperDiv {
+    display:flex;
+    width: calc(100% - 50px);
+    margin-left: 22px;
+}
+
+.actionWrapperDiv > div {
+    flex:1;
+}
+
+.killJobDiv {
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.forceDeleteCheckbox {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.jobIdLabel {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    display:inline;
+}
+
+.jobIdInput {
+    background-color: #2b3f49;
+    border: solid #ffffff 2px;
+    width: 100px;
+    height: 35px;
+    text-decoration-color: #FFFFFF;
+    color: #ffffff;
+    padding-left: 10px;
+    font-size: 1.0em;
+}
+
+.formDiv {
+    margin-left: 20px;
+}
+
+.formLabel {
+    display:block;
+    padding-top: 2px;
+    font-size: 8px;
+    color: #FFFFFF;
+}
+
+.formField {
+    display:inline;
+    background-color: #2b3f49;
+    border: 3px solid #222222;
+    width: calc(100% - 92px);
+    min-width: 200px;
+    height: 35px;
+    text-decoration-color: #FFFFFF;
+    color: #ffffff;
+    padding-left: 10px;
+    font-size: 1.0em;
+}
+
+.jobStatusDiv {
+    margin-left: 22px;
+    height: calc(100% - 475px);
+    width: calc(100% - 50px);
+}
+
+.jobStatusTable {
+    text-align: left;
+    width: 100%;
+    background-color: #2b3f49;
+    overflow-y: scroll;
+    display: block;
+    height: calc(100% - 5px);
+    border: none;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+table.jobStatusTable th {
+    font-weight: bolder;
+    font-size: 1em;
+    border-bottom: 1px solid white;
+    pointer-events: none;
+    padding: 10px 10px 3px 0;
+}
+
+table.jobStatusTable td {
+    padding: 10px 10px 5px 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+table.jobStatusTable tr {
+    background-color: #2b3f49;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+table.jobStatusTable tr:hover {
+    background: #517689;
+    cursor: hand;
+}
+
+.actionButtonGroup {
+    text-align: left;
+    margin: 0 0 5px 22px;
+}
+/*****************************************
+*** COMMON
+******************************************/
+.clearfix {
+    overflow: auto;
+}
+
+
+/*****************************************
+*** HEADER
+******************************************/
+.headerWrapper {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.mainHeader {
+    padding: 0;
+    margin:  0;
+}
+
+.loggingHeader {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+/*****************************************
+*** FORM
+******************************************/
+.formLabel {
+    display:block;
+    padding-top: 10px;
+    font-size: 2.0em;
+    color: #FFFFFF;
+}
+
+.formField {
+    display:inline;
+    background-color: #2b3f49;
+    border: 3px solid #222222;
+    width: calc(100% - 92px);
+    min-width: 200px;
+    height: 35px;
+    text-decoration-color: #FFFFFF;
+    color: #ffffff;
+    padding-left: 10px;
+    font-size: 1.0em;
+}
+
+.formField:focus {
+    background-color: #3c535d;
+    outline: none;
+}
+
+.logTextArea {
+    background-color: #2b3f49;
+    text-align: left;
+    color: #ffffff;
+    outline: none;
+    width:calc(100% - 6px);
+    height:calc(100% - 33px);
+}
+
+.logDiv {
+    margin-top: 1.0em;
+    margin-left: 22px;
+    position:absolute;
+    top: calc(100% - 325px);
+    bottom: 50px;
+    right: 28px;
+    left: 0;
+}
+
+/*****************************************
+*** BUTTONS
+******************************************/
+.simpleButton {
+    width:100px;
+    height:40px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
+    font-size: 10pt;
+    color: #000000;
+    text-align: center;
+    text-decoration: none;
+    background: #bcc2c6;
+    border: 0;
+    border-radius: 7px;
+    outline: none;
+}
+
+.simpleButton:focus {
+}
+
+.simpleButton:hover {
+    color: #222222;
+    background: #e0e6ea;
+}
+
+.simpleButton:disabled {
+    color: #949494;
+    background: #454545;
+    pointer-events: none;
+    cursor: default;
+}
+
+.browseButton {
+    vertical-align: middle;
+    width: 50px;
+    height: 30px;
+    font-size: 1.5em;
+}
+.buttonGroup {
+    position: absolute;
+    bottom: 5px;
+    left: 22px;
+}
+
+.checkBoxGroup {
+    position: absolute;
+    bottom: 28px;
+    left: calc(100% - 210px);
+    margin: 0;
+    padding: 0;
+}
+
+.simpleCheckBox {
+    margin: 5px 0 0 0;
+    padding: 0;
+}
+
+.simpleCheckboxLabel {
+    display: block;
+
+}

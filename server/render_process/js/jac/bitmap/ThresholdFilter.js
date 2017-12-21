@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
        var ThresholdFilter = {};
 
 	    ThresholdFilter.filter = function($srcData, $dstData, $operation, $threshold, $replaceColor, $mask, $copySource){
@@ -68,4 +69,4 @@
         //Return constructor
         return ThresholdFilter;
     })();
-
+});

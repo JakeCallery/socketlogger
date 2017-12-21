@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
 	    /**
 	     * @interface
 	     */
@@ -16,4 +17,4 @@
         //Return constructor
         return IPoolable;
     })();
-
+});

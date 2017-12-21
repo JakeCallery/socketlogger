@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
        var MathUtils = {};
 
 	    MathUtils.PI_OVER_180 = (Math.PI/180);
@@ -77,4 +78,4 @@
         //Return constructor
         return MathUtils;
     })();
-
+});

@@ -3,9 +3,11 @@
  * User: Jake
  */
 
-import EventDispatcher from 'jac/events/EventDispatcher';
-import ObjUtils from 'jac/utils/ObjUtils';
-    export default (function(){
+define([
+'jac/events/EventDispatcher',
+'jac/utils/ObjUtils'],
+function(EventDispatcher,ObjUtils,Rectangle,LoopStyle,PlayDirection){
+    return (function(){
         /**
          * Creates a SpriteSheet object
          * @extends {EventDispatcher}
@@ -49,4 +51,4 @@ import ObjUtils from 'jac/utils/ObjUtils';
         //Return constructor
         return SpriteSheet;
     })();
-
+});

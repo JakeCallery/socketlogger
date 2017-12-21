@@ -11,6 +11,7 @@ class Client extends EventEmitter {
 
         this.socket.on('data', ($data) => {
             l.debug('Client Data: ' + $data);
+            this.emit('newlogdata', $data.toString());
         });
 
         this.socket.on('end', ($e) => {

@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         var TypeUtils = {};
 
 	    /**
@@ -36,4 +37,4 @@
         //Return constructor
         return TypeUtils;
     })();
-
+});

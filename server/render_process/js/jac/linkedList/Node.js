@@ -3,9 +3,11 @@
  * User: Jake
  */
 
-import InterfaceUtils from 'jac/utils/InterfaceUtils';
-import ILinkedListable from 'jac/linkedList/ILinkedListable';
-    export default (function(){
+define([
+'jac/utils/InterfaceUtils',
+'jac/linkedList/ILinkedListable'],
+function(InterfaceUtils, ILinkedListable){
+    return (function(){
         /**
          * Creates a Node object for a linked list
          * @param {Object} [$obj] object to be stored in this node
@@ -27,4 +29,4 @@ import ILinkedListable from 'jac/linkedList/ILinkedListable';
         //Return constructor
         return Node;
     })();
-
+});

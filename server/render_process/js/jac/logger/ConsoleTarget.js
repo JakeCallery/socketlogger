@@ -3,44 +3,50 @@
  * User: Jake
  */
 
-import BaseTarget from 'jac/logger/BaseTarget';
-import LogEvent from 'jac/logger/events/LogEvent';
+define(['jac/logger/BaseTarget', 'jac/utils/ObjUtils', 'jac/logger/events/LogEvent'],
+function(BaseTarget, ObjUtils, LogEvent){
+    return (function(){
+        /**
+         * Creates a ConsoleTarget object
+         * @extends {BaseTarget}
+         * @constructor
+         */
+        function ConsoleTarget(){
 
-export default class ConsoleTarget extends BaseTarget{
-	/**
-	 * Creates a ConsoleTarget object
-	 * @extends {BaseTarget}
-	 * @constructor
-	 */
-	constructor(){
+	        //super
+	        BaseTarget.call(this);
 
-		//super
-		super();
+	        //Private
+	        var _hasConsoleLog = (('console' in window) && ('log' in window.console));
 
-		//Private
-		let _hasConsoleLog = (('console' in window) && ('log' in window.console));
+	        //Privileged Methods
+	        this.getHasConsoleLog = function(){
+		        return _hasConsoleLog;
+	        };
+        }
 
-		//Privileged Methods
-		this.getHasConsoleLog = function(){
-			return _hasConsoleLog;
-		};
-	}
+		//Inherit / Extend
+	    ObjUtils.inheritPrototype(ConsoleTarget, BaseTarget);
 
-	/**
-	 * Prints args to the browser console.  Dispatchers LogEvent.TARGET_UPDATED when done
-	 * @param {...} $args variadic args
-	 * @override
-	 */
-	output($args){
-		if(this.isEnabled){
-			super.output(arguments);
+	    /**
+	     * Prints args to the browser console.  Dispatchers LogEvent.TARGET_UPDATED when done
+	     * @param {...} $args variadic args
+	     * @override
+	     */
+	    ConsoleTarget.prototype.output = function($args){
+		    if(this.isEnabled){
+			    var self = this;
+		        ConsoleTarget.superClass.output.call(self, arguments);
 
-			if(this.getHasConsoleLog()){
-				let list = Array.prototype.slice.call(arguments,0);
-				console.log.apply(console, list);
-				this.dispatchEvent(new LogEvent(LogEvent.TARGET_UPDATED));
-			}
-		}
-	};
-}
+				if(this.getHasConsoleLog()){
+					var list = Array.prototype.slice.call(arguments,0);
+					console.log.apply(console, list);
+					this.dispatchEvent(new LogEvent(LogEvent.TARGET_UPDATED));
+				}
+		    }
+	    };
 
+        //Return constructor
+        return ConsoleTarget;
+    })();
+});

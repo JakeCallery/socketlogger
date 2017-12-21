@@ -3,9 +3,11 @@
  * User: Jake
  */
 
-import IPoolable from 'jac/pool/IPoolable';
-import InterfaceUtils from 'jac/utils/InterfaceUtils';
-    export default (function(){
+define([
+'jac/pool/IPoolable',
+'jac/utils/InterfaceUtils'],
+function(IPoolable, InterfaceUtils){
+    return (function(){
         /**
          * Creates an Pool of the specified object
          * @param {Function} $objCtor this object must have a property called 'poolable' that is set to true
@@ -134,4 +136,4 @@ import InterfaceUtils from 'jac/utils/InterfaceUtils';
         //Return constructor
         return Pool;
     })();
-
+});

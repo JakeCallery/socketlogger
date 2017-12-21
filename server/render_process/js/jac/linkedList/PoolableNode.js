@@ -3,12 +3,14 @@
  * User: Jake
  */
 
-import Node from 'jac/linkedList/Node';
-import ObjUtils from 'jac/utils/ObjUtils';
-import IPoolable from 'jac/pool/IPoolable';
-import InterfaceUtils from 'jac/utils/InterfaceUtils';
-import ILinkedListable from 'jac/linkedList/ILinkedListable';
-    export default (function(){
+define([
+'jac/linkedList/Node',
+'jac/utils/ObjUtils',
+'jac/pool/IPoolable',
+'jac/utils/InterfaceUtils',
+'jac/linkedList/ILinkedListable'],
+function(Node,ObjUtils, IPoolable, InterfaceUtils, ILinkedListable){
+    return (function(){
         /**
          * Creates a PoolableNode object
          * @implements {IPoolable}
@@ -48,4 +50,4 @@ import ILinkedListable from 'jac/linkedList/ILinkedListable';
         //Return constructor
         return PoolableNode;
     })();
-
+});

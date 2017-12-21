@@ -3,7 +3,8 @@
  * User: Jake
  */
 
-
+define([],
+function(){
 	var BlobUtils = {};
 
 	BlobUtils.binaryStringToBlob = function($bs, $options){
@@ -25,10 +26,10 @@
             blobData[i] = imageData.charCodeAt(i);
         }
 
-		return new Blob([blobData.buffer], $options);
+        return new Blob([blobData.buffer], $options);
 
     };
 
 	//Return constructor
-	export default BlobUtils;
-
+	return BlobUtils;
+});

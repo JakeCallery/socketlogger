@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         var PlayDirection = {};
 
 	    PlayDirection.BACKWARD = -1;
@@ -14,4 +15,4 @@
         //Return constructor
         return PlayDirection;
     })();
-
+});

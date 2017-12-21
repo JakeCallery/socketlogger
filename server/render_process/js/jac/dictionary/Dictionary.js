@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         /**
          * Creates a Dictionary object
          * @param {Boolean} [$allowOverwrite=true]
@@ -66,4 +67,4 @@
         //Return constructor
         return Dictionary;
     })();
-
+});

@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         var DOMUtils = {};
 
 	    /**
@@ -27,16 +28,18 @@
 	    };
 
 	    DOMUtils.addClass = function($domEl, $className){
-			var delimiter = '';
-			if($domEl.className !== ''){
-				delimiter = ' ';
-			}
-		    $domEl.className += delimiter + $className;
+		    $domEl.className += ' ' + $className;
 	    };
 
 	    DOMUtils.removeClass = function($domEl, $className){
+			var numClasses = $domEl.className.split(' ').length;
 		    var regEx = new RegExp('(\\s|^)' + $className + '(\\s|$)');
-		    $domEl.className = $domEl.className.replace(regEx,'');
+		    if(numClasses > 0){
+				$domEl.className = $domEl.className.replace(regEx,' ');
+			} else {
+				$domEl.className = $domEl.className.replace(regEx,'');
+			}
+
 	    };
 
 	    DOMUtils.hasClass = function($domEl, $className){
@@ -58,33 +61,6 @@
 			    DOMUtils.addClass($domEl, $classString);
 		    }
 	    };
-
-		DOMUtils.getChildById = function($rootEl, $id){
-			var children = [];
-			DOMUtils.getAllChildren($rootEl, children);
-			if(children){
-				for(var i = 0; i < children.length; i++){
-					if(children[i].id === $id){
-						//found it
-						return children[i];
-					}
-				}
-			}
-			return null;
-		};
-
-		DOMUtils.getDirectChildById = function($rootEl, $id){
-			var children = $rootEl.childNodes;
-			if(children){
-				for(var i = 0; i < children.length; i++){
-					if(children[i].id === $id){
-						//found it
-						return children[i];
-					}
-				}
-			}
-			return null;
-		};
 
 	    DOMUtils.getAllChildren = function($rootEl, $listToPopulate){
 		    var children = $rootEl.childNodes;
@@ -123,10 +99,9 @@
 		    DOMUtils.getAllChildren($rootElement, childNodes);
 		    var currentClassNames = [];
 		    for(var i = 0, l = childNodes.length; i < l; i++){
-				//if(childNodes[i].hasOwnProperty('className')){
-				if('className' in childNodes[i]){
+				if(childNodes[i].hasOwnProperty('className') || 'className' in childNodes[i]){
 					var className = childNodes[i].className;
-					if(typeof(className) !== 'undefined'){
+					if(className !== undefined){
 						currentClassNames = className.split(' ');
 					}
 					if(childNodes.length > 0 && currentClassNames.indexOf($className) !== -1){
@@ -163,11 +138,7 @@
 		    }
 	    };
 
-	    DOMUtils.insertAfter = function($referenceElement, $newElement){
-			$referenceElement.parentNode.insertBefore($newElement, $referenceElement.nextSibling);
-		};
-
         //Return constructor
         return DOMUtils;
     })();
-
+});

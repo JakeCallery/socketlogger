@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
 
 	    var BitmapUtils = {};
 
@@ -38,4 +39,4 @@
         //Return constructor
         return BitmapUtils;
     })();
-
+});

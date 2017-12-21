@@ -3,8 +3,9 @@
  * User: Jake
  */
 
-
-    export default (function(){
+define([],
+function(){
+    return (function(){
         /**
          * Creates a ArrayBufferGC Singleton object
          * to use ALWAYS new it up mySingleton = new ArrayBufferGC()
@@ -61,4 +62,4 @@
         //Return constructor
         return ArrayBufferGC;
     })();
-
+});

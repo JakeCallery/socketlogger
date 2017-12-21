@@ -17,8 +17,6 @@ define([
             //L.debug('New Main!');
             let mainObj = {};
 
-
-
             if(FD.isRunningInElectron()){
                 L.debug('Running Under Election');
                 mainObj.remote = nodeRequire('electron').remote;
