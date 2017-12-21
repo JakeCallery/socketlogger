@@ -2,6 +2,12 @@ import logging
 import sys
 
 
+class SocketHandler(logging.Handler):
+    def emit(self, record):
+        log_entry = self.format(record)
+        print("Socket: " + str(log_entry))
+
+
 class SocketLogger:
     def __init__(self, logger_name=__name__, log_level=logging.DEBUG):
         self.log_level = log_level
@@ -27,4 +33,10 @@ class SocketLogger:
         file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
         file_handler.setLevel(self.log_level)
         self.logger.addHandler(file_handler)
+
+    def add_socket_logger(self, host):
+        socket_handler = SocketHandler()
+        socket_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+        socket_handler.setLevel(self.log_level)
+        self.logger.addHandler(socket_handler)
 
