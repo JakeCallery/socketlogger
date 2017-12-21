@@ -32,7 +32,6 @@ define([
                 //Delegates
                 //this.copyLogButtonClickDelegate = EventUtils.bind(self, self.handleCopyLogClick);
                 //this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
-                this.deleteJobButtonClickDelegate = EventUtils.bind(self, self.handleDeleteJobButtonClick);
 
                 //DOM
                 //this.copyLogButton = DOC.getElementById('copyLogButton');
@@ -57,8 +56,8 @@ define([
                     this.ipcRenderer = nodeRequire('electron').ipcRenderer;
                     this.clipboard = nodeRequire('electron').clipboard;
 
-                    this.ipcRenderer.on('newlogdata', ($e) => {
-                        l.debug('New Log Data: ', $e);
+                    this.ipcRenderer.on('newlogdata', ($e, $data) => {
+                        L.debug('New Log Data: ', $data);
                     });
 
                     //get prefs
