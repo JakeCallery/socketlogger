@@ -37,7 +37,8 @@ define([
                 //this.copyLogButton = DOC.getElementById('copyLogButton');
                 //this.clearLogButton = DOC.getElementById('clearLogButton');
                 //this.scrollLogCheckBox = DOC.getElementById('scrollLogCheckBox');
-                //this.body = DOC.body;
+                this.body = DOC.body;
+                this.mainDiv = DOC.getElementById('mainDiv');
 
                 //Events
                 // EventUtils.addDomListener(self.copyLogButton, 'click', self.copyLogButtonClickDelegate);
@@ -58,6 +59,12 @@ define([
 
                     this.ipcRenderer.on('newlogdata', ($e, $data) => {
                         L.debug('New Log Data: ', $data);
+
+                        let p = DOC.createElement('p');
+                        let textNode = DOC.createTextNode($data);
+                        p.appendChild(textNode);
+                        this.mainDiv.appendChild(p);
+
                     });
 
                     //get prefs
@@ -70,7 +77,6 @@ define([
                         self.prefs = $msg;
                         if (self.prefs) {
                             //TODO: Set preferences here
-
                             // if(typeof(self.prefs['dataDir']) !== 'undefined'){
                             //     L.debug('Setting Data from Prefs');
                             //     //self.dataDirInput.value = self.prefs['dataDir'];
