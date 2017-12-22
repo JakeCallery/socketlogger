@@ -32,6 +32,7 @@ define([
                 //Delegates
                 //this.copyLogButtonClickDelegate = EventUtils.bind(self, self.handleCopyLogClick);
                 //this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
+                this.debugButtonClickDelegate = EventUtils.bind(self, self.handleDebugClick);
 
                 //DOM
                 //this.copyLogButton = DOC.getElementById('copyLogButton');
@@ -39,10 +40,12 @@ define([
                 //this.scrollLogCheckBox = DOC.getElementById('scrollLogCheckBox');
                 this.body = DOC.body;
                 this.mainDiv = DOC.getElementById('mainDiv');
+                this.debugButton = DOC.getElementById('debugButton');
 
                 //Events
                 // EventUtils.addDomListener(self.copyLogButton, 'click', self.copyLogButtonClickDelegate);
                 // EventUtils.addDomListener(self.clearLogButton, 'click', self.clearLogButtonClickDelegate);
+                EventUtils.addDomListener(self.debugButton, 'click', self.debugButtonClickDelegate);
                 L.debug('New UI Manager');
 
                 // self.body.addEventListener('focusin', function($evt) {
@@ -57,6 +60,8 @@ define([
                     this.ipcRenderer = nodeRequire('electron').ipcRenderer;
                     this.clipboard = nodeRequire('electron').clipboard;
 
+                    this.remote.getCurrentWindow().toggleDevTools();
+
                     this.ipcRenderer.on('newlogdata', ($e, $data) => {
                         L.debug('New Log Data: ', $data);
 
@@ -65,6 +70,14 @@ define([
                         p.appendChild(textNode);
                         this.mainDiv.appendChild(p);
 
+                    });
+
+                    this.ipcRenderer.on('logToGUI', ($e, $msg) => {
+                        let p = DOC.createElement('p');
+                        p.style.color = "#555555";
+                        let textNode = DOC.createTextNode($msg);
+                        p.appendChild(textNode);
+                        this.mainDiv.appendChild(p);
                     });
 
                     //get prefs
