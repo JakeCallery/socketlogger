@@ -9,7 +9,7 @@ export default class FeatureDetector{
 
     static isRunningInElectron() {
         if (window && window.process && window.process.type && window.process.versions) {
-            return (process.versions.hasOwnProperty('electron'));
+            return (window.process.versions.hasOwnProperty('electron'));
         } else {
             return false;
         }

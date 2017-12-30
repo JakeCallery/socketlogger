@@ -78,7 +78,7 @@ function handleAppReady() {
     l.debug('Resources Path: ' + process.resourcesPath);
 
     // and load the index.html of the app.
-    mainWindow.loadURL(`file://${__dirname}/../render_process/dist/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/../render_dist/index.html`);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {

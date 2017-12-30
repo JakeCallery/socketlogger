@@ -5,5 +5,5 @@ node_modules
 dist
 *.avi
 *.ogg
-
+render_dist
 keys

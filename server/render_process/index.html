@@ -6,7 +6,16 @@
     <link href="css/main.css" rel="stylesheet"/>
     <style id="tabHelper"></style>
 </head>
-    <body
+<script>
+    if (window.require) {
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+    }
+
+</script>
+<body
             onmousedown="document.getElementById('tabHelper').innerHTML=''"
             onkeydown="document.getElementById('tabHelper').innerHTML=
             'button:focus{background:#69919B}' +
@@ -19,15 +28,7 @@
         </div>
     </body>
 
-    <script>
-        if (window.require) {
-            window.nodeRequire = require;
-            delete window.require;
-            delete window.exports;
-            delete window.module;
-        }
 
-    </script>
 
     <script>
         // You can also require other files to run in this process

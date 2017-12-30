@@ -2,7 +2,8 @@
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+//const CleanWebpackPlugin = require('clean-webpack-plugin');
+console.log('DIRNAME: ' + __dirname);
 
 module.exports = {
     entry: {
@@ -11,8 +12,8 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        path: __dirname + './render_process/render_dist',
-        publicPath: '/'
+        path: __dirname + '/render_dist',
+        publicPath: ''
     },
 
     resolve: {
