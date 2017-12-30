@@ -143,6 +143,7 @@ export default class UIManager extends EventDispatcher {
     }
 
     logToGUI($msg) {
+        console.log('Logging to GUI: ' + $msg);
         // this.logTextArea.value += ($msg + '\n');
         // if(this.scrollLogCheckBox.checked){
         //      this.logTextArea.scrollTop = this.logTextArea.scrollHeight;

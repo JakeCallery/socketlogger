@@ -5,6 +5,7 @@ import ConsoleTarget from 'jac/logger/ConsoleTarget';
 import FD from 'FeatureDetector';
 import whenDomReady from 'when-dom-ready';
 import UIManager from 'UIManager';
+import UILogTarget from 'UILogTarget';
 
 //Import through loaders
 import '../css/main.css';
@@ -29,7 +30,7 @@ if(FD.isRunningInElectron()){
 }
 
  let uiManager = new UIManager(document);
- //L.addLogTarget(new UILogTarget(uiManager), true);
+ L.addLogTarget(new UILogTarget(uiManager), true);
 
 //Set up UI Manager
 whenDomReady()
