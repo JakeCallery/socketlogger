@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const CleanWebpackPlugin = require('clean-webpack-plugin');
 console.log('DIRNAME: ' + __dirname);
+const distDir = __dirname + '/render_dist';
 
 module.exports = {
     entry: {
@@ -12,7 +13,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        path: __dirname + '/render_dist',
+        path: distDir,
         publicPath: ''
     },
 
@@ -58,7 +59,7 @@ module.exports = {
     plugins: [
 /*
         new CleanWebpackPlugin(['dist'], {
-            root: __dirname + '/../../',
+            root: distDir,
             verbose: true,
             dry: false,
             exclude: []
