@@ -11,7 +11,7 @@ L.levelFilter = (LogLevel.DEBUG | LogLevel.INFO | LogLevel.WARNING | LogLevel.ER
 let mainObj = {};
 
 if(FD.isRunningInElectron()){
-    L.debug('Running Under Election');
+    L.debug('Running Under Electron');
     mainObj.remote = nodeRequire('electron').remote;
     mainObj.dialog = mainObj.remote.dialog;
     mainObj.fs = nodeRequire('fs');
