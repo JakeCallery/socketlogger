@@ -5,8 +5,8 @@
  * Time: 4:53 PM
  * To change this template use File | Settings | File Templates.
  */
-define(function(){
-	return (function(){
+
+	export default (function(){
 
 		var EventUtils = {};
 
@@ -60,4 +60,3 @@ define(function(){
 
 		return EventUtils;
 	})();
-});

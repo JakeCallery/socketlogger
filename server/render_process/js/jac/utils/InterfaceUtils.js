@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
         var InterfaceUtils = {};
 
 	    /**
@@ -224,4 +223,4 @@ function(){
         //Return constructor
         return InterfaceUtils;
     })();
-});
+

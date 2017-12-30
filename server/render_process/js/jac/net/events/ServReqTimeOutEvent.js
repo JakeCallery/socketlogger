@@ -2,9 +2,9 @@
  * Created with JetBrains PhpStorm.
  * User: Jake
  */
-define(['jac/events/JacEvent', 'jac/utils/ObjUtils'],
-	function(JacEvent, ObjUtils){
-	return (function(){
+import JacEvent from 'jac/events/JacEvent';
+import ObjUtils from 'jac/utils/ObjUtils';
+	export default (function(){
 
 		/**
 		 * Creates a ServReqTimeOutEvent object
@@ -30,4 +30,3 @@ define(['jac/events/JacEvent', 'jac/utils/ObjUtils'],
 		//Return constructor
 		return ServReqTimeOutEvent;
 	})();
-});

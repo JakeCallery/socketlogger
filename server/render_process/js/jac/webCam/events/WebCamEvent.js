@@ -3,9 +3,9 @@
  * User: Jake
  */
 
-define(['jac/events/JacEvent','jac/utils/ObjUtils'],
-function(JacEvent,ObjUtils){
-    return (function(){
+import JacEvent from 'jac/events/JacEvent';
+import ObjUtils from 'jac/utils/ObjUtils';
+    export default (function(){
         /**
          * Creates a WebCamEvent object
          * @param {String} $type
@@ -29,4 +29,4 @@ function(JacEvent,ObjUtils){
         //Return constructor
         return WebCamEvent;
     })();
-});
+

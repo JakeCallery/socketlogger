@@ -3,13 +3,11 @@
  * User: Jake
  */
 
-define([
-'jac/events/EventDispatcher',
-'jac/utils/ObjUtils',
-'jac/utils/EventUtils',
-'jac/webCam/events/WebCamEvent'],
-function(EventDispatcher,ObjUtils, EventUtils, WebCamEvent){
-    return (function(){
+import EventDispatcher from 'jac/events/EventDispatcher';
+import ObjUtils from 'jac/utils/ObjUtils';
+import EventUtils from 'jac/utils/EventUtils';
+import WebCamEvent from 'jac/webCam/events/WebCamEvent';
+    export default (function(){
         /**
          * Creates a WebCam object
          * @param {document} $document
@@ -163,4 +161,4 @@ function(EventDispatcher,ObjUtils, EventUtils, WebCamEvent){
         //Return constructor
         return WebCam;
     })();
-});
+

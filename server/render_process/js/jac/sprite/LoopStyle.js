@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
         var LoopStyle = {};
 
 	    LoopStyle.LOOP = 0;
@@ -18,4 +17,4 @@ function(){
         //Return constructor
         return LoopStyle;
     })();
-});
+

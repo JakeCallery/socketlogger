@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
         var DOMUtils = {};
 
 	    /**
@@ -28,18 +27,16 @@ function(){
 	    };
 
 	    DOMUtils.addClass = function($domEl, $className){
-		    $domEl.className += ' ' + $className;
+			var delimiter = '';
+			if($domEl.className !== ''){
+				delimiter = ' ';
+			}
+		    $domEl.className += delimiter + $className;
 	    };
 
 	    DOMUtils.removeClass = function($domEl, $className){
-			var numClasses = $domEl.className.split(' ').length;
 		    var regEx = new RegExp('(\\s|^)' + $className + '(\\s|$)');
-		    if(numClasses > 0){
-				$domEl.className = $domEl.className.replace(regEx,' ');
-			} else {
-				$domEl.className = $domEl.className.replace(regEx,'');
-			}
-
+		    $domEl.className = $domEl.className.replace(regEx,'');
 	    };
 
 	    DOMUtils.hasClass = function($domEl, $className){
@@ -61,6 +58,33 @@ function(){
 			    DOMUtils.addClass($domEl, $classString);
 		    }
 	    };
+
+		DOMUtils.getChildById = function($rootEl, $id){
+			var children = [];
+			DOMUtils.getAllChildren($rootEl, children);
+			if(children){
+				for(var i = 0; i < children.length; i++){
+					if(children[i].id === $id){
+						//found it
+						return children[i];
+					}
+				}
+			}
+			return null;
+		};
+
+		DOMUtils.getDirectChildById = function($rootEl, $id){
+			var children = $rootEl.childNodes;
+			if(children){
+				for(var i = 0; i < children.length; i++){
+					if(children[i].id === $id){
+						//found it
+						return children[i];
+					}
+				}
+			}
+			return null;
+		};
 
 	    DOMUtils.getAllChildren = function($rootEl, $listToPopulate){
 		    var children = $rootEl.childNodes;
@@ -99,9 +123,10 @@ function(){
 		    DOMUtils.getAllChildren($rootElement, childNodes);
 		    var currentClassNames = [];
 		    for(var i = 0, l = childNodes.length; i < l; i++){
-				if(childNodes[i].hasOwnProperty('className') || 'className' in childNodes[i]){
+				//if(childNodes[i].hasOwnProperty('className')){
+				if('className' in childNodes[i]){
 					var className = childNodes[i].className;
-					if(className !== undefined){
+					if(typeof(className) !== 'undefined'){
 						currentClassNames = className.split(' ');
 					}
 					if(childNodes.length > 0 && currentClassNames.indexOf($className) !== -1){
@@ -138,7 +163,11 @@ function(){
 		    }
 	    };
 
+	    DOMUtils.insertAfter = function($referenceElement, $newElement){
+			$referenceElement.parentNode.insertBefore($newElement, $referenceElement.nextSibling);
+		};
+
         //Return constructor
         return DOMUtils;
     })();
-});
+

@@ -5,8 +5,8 @@
  * Time: 5:25 PM
  * To change this template use File | Settings | File Templates.
  */
-define(function(){
-	return (function(){
+
+	export default (function(){
 
 		var NetUtils = {};
 
@@ -117,4 +117,3 @@ define(function(){
 
 		return NetUtils;
 	})();
-});

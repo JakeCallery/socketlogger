@@ -5,24 +5,20 @@
  * Time: 3:23 PM
  * To change this template use File | Settings | File Templates.
  */
-define(function(){
 
-	return(function(){
+export default class JacEvent {
 
-		/**
-		 * Creates a JacEvent object to be used with jac.EventDispatcher
-		 * @param {String} $type
-		 * @param {Object} [$data]
-		 * @constructor
-		 */
-		function JacEvent ($type, $data){
-			this.target = undefined;
-			this.currentTarget = undefined;
-			this.type = $type;
-			this.data = $data;
-		}
+    /**
+     * Creates a JacEvent object to be used with jac.EventDispatcher
+     * @param {String} $type
+     * @param {Object} [$data]
+     * @constructor
+     */
+    constructor ($type, $data) {
+        this.target = undefined;
+        this.currentTarget = undefined;
+        this.type = $type;
+        this.data = $data;
+    }
+}
 
-		return JacEvent;
-	})();
-
-});

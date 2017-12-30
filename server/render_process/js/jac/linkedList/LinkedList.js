@@ -3,14 +3,12 @@
  * User: Jake
  */
 
-define([
-'jac/events/EventDispatcher',
-'jac/utils/ObjUtils',
-'jac/linkedList/Node',
-'jac/utils/InterfaceUtils',
-'jac/linkedList/ILinkedListable'],
-function(EventDispatcher,ObjUtils,Node,InterfaceUtils, ILinkedListable){
-    return (function(){
+import EventDispatcher from 'jac/events/EventDispatcher';
+import ObjUtils from 'jac/utils/ObjUtils';
+import Node from 'jac/linkedList/Node';
+import InterfaceUtils from 'jac/utils/InterfaceUtils';
+import ILinkedListable from 'jac/linkedList/ILinkedListable';
+    export default (function(){
         /**
          * Creates a LinkedList object
          * @extends {EventDispatcher}
@@ -152,4 +150,4 @@ function(EventDispatcher,ObjUtils,Node,InterfaceUtils, ILinkedListable){
         //Return constructor
         return LinkedList;
     })();
-});
+

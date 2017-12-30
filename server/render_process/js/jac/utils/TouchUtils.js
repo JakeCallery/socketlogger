@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
         var TouchUtils = {};
 
 	    /**
@@ -56,4 +55,4 @@ function(){
         //Return constructor
         return TouchUtils;
     })();
-});
+

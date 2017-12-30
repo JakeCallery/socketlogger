@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
         var MouseUtils = {};
 
 	    /**
@@ -42,4 +41,4 @@ function(){
         //Return constructor
         return MouseUtils;
     })();
-});
+

@@ -3,12 +3,10 @@
  * User: Jake
  */
 
-define([
-'jac/events/EventDispatcher',
-'jac/utils/ObjUtils',
-'jac/events/JacEvent'],
-function(EventDispatcher,ObjUtils, JacEvent){
-    return (function(){
+import EventDispatcher from 'jac/events/EventDispatcher';
+import ObjUtils from 'jac/utils/ObjUtils';
+import JacEvent from 'jac/events/JacEvent';
+    export default (function(){
         /**
          * Creates a NotifyingDataObject object
          * @extends {EventDispatcher}
@@ -117,4 +115,4 @@ function(EventDispatcher,ObjUtils, JacEvent){
         //Return constructor
         return NotifyingDataObject;
     })();
-});
+

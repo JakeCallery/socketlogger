@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
         var GreyscaleFilter = {};
 
 	    GreyscaleFilter.filter = function($srcData, $targetData){
@@ -35,4 +34,4 @@ function(){
         //Return constructor
         return GreyscaleFilter;
     })();
-});
+

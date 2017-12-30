@@ -4,9 +4,8 @@
  * mostly lifted from http://games.greggman.com/game/webgl-image-processing/
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
 
         var ConvolutionKernels3x3 = {};
 
@@ -132,4 +131,4 @@ function(){
         //Return constructor
         return ConvolutionKernels3x3;
     })();
-});
+

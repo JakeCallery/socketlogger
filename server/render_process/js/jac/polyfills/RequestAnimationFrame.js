@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
 	    var lastTime = 0;
 	    var vendors = ['webkit', 'moz'];
 	    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
@@ -29,4 +28,4 @@ function(){
 			    clearTimeout(id);
 		    };
     })();
-});
+

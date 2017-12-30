@@ -3,9 +3,8 @@
  * User: Jake
  */
 
-define([],
-function(){
-    return (function(){
+
+    export default (function(){
 
 	    /**
 	     * @interface
@@ -17,4 +16,4 @@ function(){
         //Return constructor
         return ILinkedListable;
     })();
-});
+

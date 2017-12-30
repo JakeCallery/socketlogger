@@ -3,35 +3,29 @@
  * User: Jake
  */
 
-define(['jac/events/EventDispatcher','jac/utils/ObjUtils'],
-function(EventDispatcher,ObjUtils){
-    return (function(){
-        /**
-         * Creates a BaseTarget object
-         * @extend {EventDispatcher)
-         * @constructor
-         */
-        function BaseTarget(){
+import EventDispatcher from 'jac/events/EventDispatcher';
 
-	        //super
-	        EventDispatcher.call(this);
+export default class BaseTarget extends EventDispatcher{
+	/**
+	 * Creates a BaseTarget object
+	 * @extend {EventDispatcher)
+	 * @constructor
+	 */
+	constructor(){
 
-	        //public
-	        this.isEnabled = true;
-        }
+		//super
+		super();
 
-	    //Inherit / Extend
-	    ObjUtils.inheritPrototype(BaseTarget,EventDispatcher);
+		//public
+		this.isEnabled = true;
+	}
 
-	    /**
-	     * File output of items to be logged.  This is mean to be overridden
-	     * @param $args {...} varadic args
-	     */
-	    BaseTarget.prototype.output = function($args){
-		  //OVERRIDE ME
-	    };
+	/**
+	 * File output of items to be logged.  This is mean to be overridden
+	 * @param $args {...} varadic args
+	 */
+	output($args){
+	  //OVERRIDE ME
+	};
+}
 
-        //Return constructor
-        return BaseTarget;
-    })();
-});

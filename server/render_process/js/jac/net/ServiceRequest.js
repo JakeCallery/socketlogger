@@ -5,18 +5,14 @@
 
 //TODO: refactor duplicate code, the actual submit isn't very DRY
 
-define([
-    'jac/utils/ObjUtils',
-    'jac/events/EventDispatcher',
-    'jac/utils/EventUtils',
-    'jac/utils/NetUtils',
-	'jac/net/events/ServReqEvent',
-    'jac/net/events/ServReqProgressEvent',
-    'jac/net/events/ServReqErrorEvent'
-],
-	function(ObjUtils, EventDispatcher, EventUtils, NetUtils, ServReqEvent,
-             ServReqProgressEvent,ServReqErrorEvent) {
-    return (function(){
+import ObjUtils from 'jac/utils/ObjUtils';
+import EventDispatcher from 'jac/events/EventDispatcher';
+import EventUtils from 'jac/utils/EventUtils';
+import NetUtils from 'jac/utils/NetUtils';
+import ServReqEvent from 'jac/net/events/ServReqEvent';
+import ServReqProgressEvent from 'jac/net/events/ServReqProgressEvent';
+import ServReqErrorEvent from 'jac/net/events/ServReqErrorEvent';
+    export default (function(){
     
         /**
          * Creates a ServiceRequest object
@@ -53,10 +49,10 @@ define([
 
 	        //set up events
 	        var self = this;
-	        _httpObj.onreadystatechange = EventUtils.bind(self, self.onReadyStateChange, _httpObj);
-		    _httpObj.onerror = EventUtils.bind(self, self.onError, _httpObj);		//This may not turn out to be useful
-	        _httpObj.onprogress = EventUtils.bind(self, self.onProgress, _httpObj);
-	        _httpObj.ontimeout = EventUtils.bind(self, self.onTimeOut, _httpObj);	//This may not turn out to be useful
+		   	_httpObj.onreadystatechange = EventUtils.bind(self, self.onReadyStateChange, _httpObj);
+		    _httpObj.onerror = EventUtils.bind(self, self.onError, _httpObj);	//This may not turn out to be useful
+		    _httpObj.onprogress = EventUtils.bind(self, self.onProgress, _httpObj);
+		    _httpObj.ontimeout = EventUtils.bind(self, self.onTimeOut, _httpObj);	//This may not turn out to be useful
 
 	        //region Privileged Methods
 	        this.getUrl = function(){
@@ -257,4 +253,3 @@ define([
         //Return constructor
         return ServiceRequest;
     })();
-});

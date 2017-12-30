@@ -7,145 +7,140 @@
  *
  */
 
-define([
-'jac/math/FastMath',
-'jac/math/Vec2DObj'],
-function(FastMath, Vec2DObj){
-    return (function(){
-	    /**
-	     * Static library for some 2D Vector Math stuff
-	     * @static
-	     */
-	    var Vec2D = {};
+import FastMath from 'jac/math/FastMath';
+import Vec2DObj from 'jac/math/Vec2DObj';
 
-	    Vec2D.multScalar = function($targetVec2D, $value){
-		    $targetVec2D.x *= $value;
-		    $targetVec2D.y *= $value;
-	    };
+export default {
+	/**
+	 * Static library for some 2D Vector Math stuff
+	 * @static
+	 */
 
-	    Vec2D.multVector = function($targetVec2D, $vec2D){
-		    $targetVec2D.x *= $vec2D.x;
-		    $targetVec2D.y *= $vec2D.y;
-	    };
+    lengthOf($vec2D){
+        return Math.sqrt(($vec2D.x * $vec2D.x) + ($vec2D.y * $vec2D.y));
+    },
 
-	    Vec2D.divScalar = function($targetVec2D, $value){
-			$targetVec2D.x /= $value;
-			$targetVec2D.y /= $value;
-	    };
+	multScalar($targetVec2D, $value){
+		$targetVec2D.x *= $value;
+		$targetVec2D.y *= $value;
+	},
 
-	    Vec2D.addScalar = function($targetVec2D, $value){
-		    $targetVec2D.x += $value;
-		    $targetVec2D.y += $value;
-	    };
+	multVector($targetVec2D, $vec2D){
+		$targetVec2D.x *= $vec2D.x;
+		$targetVec2D.y *= $vec2D.y;
+	},
 
-	    Vec2D.addVector = function($targetVec2D, $vec2D){
-		    $targetVec2D.x += $vec2D.x;
-		    $targetVec2D.y += $vec2D.y;
-	    };
+	divScalar($targetVec2D, $value){
+		$targetVec2D.x /= $value;
+		$targetVec2D.y /= $value;
+	},
 
-	    Vec2D.subScalar = function($targetVec2D, $value){
-		    $targetVec2D.x -= $value;
-		    $targetVec2D.y -= $value;
-	    };
+	addScalar($targetVec2D, $value){
+		$targetVec2D.x += $value;
+		$targetVec2D.y += $value;
+	},
 
-	    Vec2D.subVector = function($targetVec2D, $vec2D){
-		    $targetVec2D.x -= $vec2D.x;
-		    $targetVec2D.y -= $vec2D.y;
-	    };
+	addVector($targetVec2D, $vec2D){
+		$targetVec2D.x += $vec2D.x;
+		$targetVec2D.y += $vec2D.y;
+	},
 
-	    Vec2D.abs = function($targetVec2D){
-		    $targetVec2D.x = FastMath.abs($targetVec2D.x);
-		    $targetVec2D.y = FastMath.abs($targetVec2D.y);
-	    };
+	subScalar($targetVec2D, $value){
+		$targetVec2D.x -= $value;
+		$targetVec2D.y -= $value;
+	},
 
-	    Vec2D.normalize = function($vec2D){
-			var len = Vec2D.lengthOf($vec2D);
-		    $vec2D.x = $vec2D.x / len;
-		    $vec2D.y = $vec2D.y / len;
-	    };
+	subVector($targetVec2D, $vec2D){
+		$targetVec2D.x -= $vec2D.x;
+		$targetVec2D.y -= $vec2D.y;
+	},
 
-	    Vec2D.copy = function($srcVec2D, $targetVec2D){
-			$targetVec2D.x = $srcVec2D.x;
-			$targetVec2D.y = $srcVec2D.y;
-			$targetVec2D.xOffset = $srcVec2D.xOffset;
-			$targetVec2D.yOffset = $srcVec2D.yOffset;
-	    };
+	abs($targetVec2D){
+		$targetVec2D.x = FastMath.abs($targetVec2D.x);
+		$targetVec2D.y = FastMath.abs($targetVec2D.y);
+	},
 
-	    Vec2D.duplicate = function($vec2D){
-		    return new Vec2DObj($vec2D.x, $vec2D.y, $vec2D.xOffset, $vec2D.yOffset);
-	    };
+	normalize($vec2D){
+		let len = this.lengthOf($vec2D);
+		$vec2D.x = $vec2D.x / len;
+		$vec2D.y = $vec2D.y / len;
+	},
 
-	    Vec2D.dot = function($vec2Da, $vec2Db){
-		    return ($vec2Da.x * $vec2Db.x) + ($vec2Da.y * $vec2Db.y);
-	    };
+	copy($srcVec2D, $targetVec2D){
+		$targetVec2D.x = $srcVec2D.x;
+		$targetVec2D.y = $srcVec2D.y;
+		$targetVec2D.xOffset = $srcVec2D.xOffset;
+		$targetVec2D.yOffset = $srcVec2D.yOffset;
+	},
 
-	    Vec2D.scaledDot = function($vec2Da, $vec2Db){
-		    var len = Vec2D.lengthOf($vec2Db);
-		    return ($vec2Da.x * ($vec2Db.x / len) + ($vec2Da.y * ($vec2Db.y / len)));
-	    };
+	duplicate ($vec2D){
+		return new Vec2DObj($vec2D.x, $vec2D.y, $vec2D.xOffset, $vec2D.yOffset);
+	},
 
-	    Vec2D.projectVectorOnVector = function($targetVec2D, $vec2Da, $vec2Db){
-		    var dot = Vec2D.scaledDot($vec2Da, $vec2Db);
-		    var len = Vec2D.lengthOf($vec2Db);
-		    $targetVec2D.x = dot * ($vec2Db.x/len);
-		    $targetVec2D.y = dot * ($vec2Db.y/len);
-	    };
+	dot($vec2Da, $vec2Db){
+		return ($vec2Da.x * $vec2Db.x) + ($vec2Da.y * $vec2Db.y);
+	},
 
-	    Vec2D.calcLeftNormal = function($targetVec2D, $vec2D){
-			$targetVec2D.x = $vec2D.y;
-		    $targetVec2D.y = -$vec2D.x;
-	    };
+	scaledDot($vec2Da, $vec2Db){
+		let len = this.lengthOf($vec2Db);
+		return ($vec2Da.x * ($vec2Db.x / len) + ($vec2Da.y * ($vec2Db.y / len)));
+	},
 
-	    Vec2D.calcRightNormal = function($targetVec2D, $vec2D){
-			$targetVec2D.x = -$vec2D.y;
-		    $targetVec2D.y = $vec2D.x;
-	    };
+	projectVectorOnVector($targetVec2D, $vec2Da, $vec2Db){
+		let dot = scaledDot($vec2Da, $vec2Db);
+		let len = this.lengthOf($vec2Db);
+		$targetVec2D.x = dot * ($vec2Db.x/len);
+		$targetVec2D.y = dot * ($vec2Db.y/len);
+	},
 
-	    Vec2D.lengthOf = function($vec2D){
-			return Math.sqrt(($vec2D.x * $vec2D.x) + ($vec2D.y * $vec2D.y));
-	    };
+	calcLeftNormal($targetVec2D, $vec2D){
+		$targetVec2D.x = $vec2D.y;
+		$targetVec2D.y = -$vec2D.x;
+	},
 
-	    Vec2D.lengthSqrOf = function($vec2D){
-			return (($vec2D.x * $vec2D.x) + ($vec2D.y * $vec2D.y));
-	    };
+	calcRightNormal($targetVec2D, $vec2D){
+		$targetVec2D.x = -$vec2D.y;
+		$targetVec2D.y = $vec2D.x;
+	},
 
-	    Vec2D.lerp = function($targetVec2D, $vec2Da, $vec2Db, $value){
-			$targetVec2D.x = $vec2Da.x + ($vec2Db.x-$vec2Da.x) * $value;
-		    $targetVec2D.y = $vec2Da.y + ($vec2Db.y - $vec2Da.y) * $value;
-	    };
+	lengthSqrOf($vec2D){
+		return (($vec2D.x * $vec2D.x) + ($vec2D.y * $vec2D.y));
+	},
 
-	    Vec2D.move = function($targetVec2D, $xOffset, $yOffset){
-		    $targetVec2D.xOffset = $xOffset;
-		    $targetVec2D.yOffset = $yOffset;
-	    };
+	lerp($targetVec2D, $vec2Da, $vec2Db, $value){
+		$targetVec2D.x = $vec2Da.x + ($vec2Db.x-$vec2Da.x) * $value;
+		$targetVec2D.y = $vec2Da.y + ($vec2Db.y - $vec2Da.y) * $value;
+	},
 
-	    Vec2D.vecFromLineSeg = function($targetVec2D, $x1, $y1, $x2, $y2){
-		    var xDiff = $x2 - $x1;
-		    var yDiff = $y2 - $y1;
+	move($targetVec2D, $xOffset, $yOffset){
+		$targetVec2D.xOffset = $xOffset;
+		$targetVec2D.yOffset = $yOffset;
+	},
 
-		    $targetVec2D.x = xDiff;
-		    $targetVec2D.y = yDiff;
-		    $targetVec2D.xOffset = $x1;
-		    $targetVec2D.yOffset = $y1;
-	    };
+	vecFromLineSeg($targetVec2D, $x1, $y1, $x2, $y2){
+		let xDiff = $x2 - $x1;
+		let yDiff = $y2 - $y1;
 
-	    Vec2D.getAngle = function($vec2D){
-		    return Math.atan2($vec2D.y, $vec2D.x);
-	    };
+		$targetVec2D.x = xDiff;
+		$targetVec2D.y = yDiff;
+		$targetVec2D.xOffset = $x1;
+		$targetVec2D.yOffset = $y1;
+	},
 
-	    Vec2D.angleBetween = function($vec2Da, $vec2Db){
-		    var dot = Vec2D.dot($vec2Da,$vec2Db);
-		    dot = dot / (Vec2D.lengthOf($vec2Da) * Vec2D.lengthOf($vec2Db));
-		    return Math.acos(dot);
-	    };
+	getAngle($vec2D){
+		return Math.atan2($vec2D.y, $vec2D.x);
+	},
 
-	    Vec2D.distBetween = function($vec2Da, $vec2Db){
-		    var xdiff = $vec2Db.x - $vec2Da.x;
-		    var ydiff = $vec2Db.y - $vec2Da.y;
-		    return Math.sqrt((xdiff * xdiff) + (ydiff * ydiff));
-	    };
+	angleBetween($vec2Da, $vec2Db){
+		let dot = this.dot($vec2Da, $vec2Db);
+		dot = dot / (this.lengthOf($vec2Da) * this.lengthOf($vec2Db));
+		return Math.acos(dot);
+	},
 
-	    //Return constructor
-        return Vec2D;
-    })();
-});
+	distBetween($vec2Da, $vec2Db){
+		let xDiff = $vec2Db.x - $vec2Da.x;
+		let yDiff = $vec2Db.y - $vec2Da.y;
+		return Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
+	}
+}
+

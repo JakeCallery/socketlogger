@@ -3,11 +3,9 @@
  * User: Jake
  */
 
-define([
-'jac/events/JacEvent',
-'jac/utils/ObjUtils'],
-function(JacEvent,ObjUtils){
-    return (function(){
+import JacEvent from 'jac/events/JacEvent';
+import ObjUtils from 'jac/utils/ObjUtils';
+    export default (function(){
 
 	    SequenceEvent.LOOP_COMPLETE = 'SequenceEvent.LOOP_COMPLETE';
 	    SequenceEvent.STOPPED = 'SequenceEvent.STOPPED';
@@ -30,4 +28,4 @@ function(JacEvent,ObjUtils){
         //Return constructor
         return SequenceEvent;
     })();
-});
+

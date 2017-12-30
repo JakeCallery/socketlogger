@@ -3,13 +3,11 @@
  * User: Jake
  */
 
-define([
-'jac/linkedList/LinkedList',
-'jac/utils/ObjUtils',
-'jac/pool/Pool',
-'jac/linkedList/PoolableNode'],
-function(LinkedList,ObjUtils,Pool,PoolableNode){
-    return (function(){
+import LinkedList from 'jac/linkedList/LinkedList';
+import ObjUtils from 'jac/utils/ObjUtils';
+import Pool from 'jac/pool/Pool';
+import PoolableNode from 'jac/linkedList/PoolableNode';
+    export default (function(){
         /**
          * Creates a PooledLinkedList object
          * @extends {LinkedList}
@@ -61,4 +59,4 @@ function(LinkedList,ObjUtils,Pool,PoolableNode){
         //Return constructor
         return PooledLinkedList;
     })();
-});
+

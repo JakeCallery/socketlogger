@@ -3,15 +3,13 @@
  * User: Jake
  */
 
-define([
-'jac/events/EventDispatcher',
-'jac/utils/ObjUtils',
-'jac/geometry/Rectangle',
-'jac/sprite/LoopStyle',
-'jac/sprite/PlayDirection',
-'jac/sprite/events/SequenceEvent'],
-function(EventDispatcher,ObjUtils,Rectangle,LoopStyle,PlayDirection,SequenceEvent){
-    return (function(){
+import EventDispatcher from 'jac/events/EventDispatcher';
+import ObjUtils from 'jac/utils/ObjUtils';
+import Rectangle from 'jac/geometry/Rectangle';
+import LoopStyle from 'jac/sprite/LoopStyle';
+import PlayDirection from 'jac/sprite/PlayDirection';
+import SequenceEvent from 'jac/sprite/events/SequenceEvent';
+    export default (function(){
         /**
          * Creates a SpriteSequence object
          * @extends {EventDispatcher}
@@ -142,4 +140,4 @@ function(EventDispatcher,ObjUtils,Rectangle,LoopStyle,PlayDirection,SequenceEven
         //Return constructor
         return SpriteSequence;
     })();
-});
+
