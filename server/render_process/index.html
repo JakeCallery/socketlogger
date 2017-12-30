@@ -34,28 +34,4 @@
         //nodeRequire('../render_process/js/app/render_main.js')
     </script>
 
-    <!-- htmlbuild:remove -->
-    <script src="js/config.js"></script>
-    <!-- endbuild -->
-
-    <script type="text/javascript">
-        //Async load RequireJS
-        (function () {
-            var sel = document.createElement('script');
-            sel.type = 'text/javascript';
-            sel.async = false;
-            //Use compiled by default
-            if (typeof USE_COMPILED != 'undefined' && USE_COMPILED === false) {
-                sel.setAttribute('data-main', 'render_main');
-                sel.src = 'js/libs/require.js';
-            }
-            else {
-                sel.src = 'js/compiled.js';
-            }
-
-            var firstTag = document.getElementsByTagName('script')[0];
-            firstTag.parentNode.insertBefore(sel, firstTag);
-        })();
-    </script>
-
 </html>

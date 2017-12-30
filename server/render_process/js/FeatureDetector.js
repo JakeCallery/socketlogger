@@ -3,30 +3,16 @@
  * User: Jake
  */
 
-define([],
-    function () {
-        return (function () {
-            /**
-             * Creates a FeatureDetector object
-             * @constructor
-             */
-            function FeatureDetector() {
-            }
+export default class FeatureDetector{
+    constructor() {
+    }
 
+    static isRunningInElectron() {
+        if (window && window.process && window.process.type && window.process.versions) {
+            return (process.versions.hasOwnProperty('electron'));
+        } else {
+            return false;
+        }
+    };
 
-            FeatureDetector.isRunningInElectron = function () {
-                if (window && window.process && window.process.type && window.process.versions) {
-                    if (process.versions.hasOwnProperty('electron')) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            };
-
-            //Return constructor
-            return FeatureDetector;
-        })();
-    });
+}
