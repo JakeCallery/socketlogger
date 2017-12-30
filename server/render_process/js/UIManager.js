@@ -3,165 +3,150 @@
  * User: Jake
  */
 
-define([
-        'libs/domReady!',
-        'jac/events/EventDispatcher',
-        'jac/utils/ObjUtils',
-        'jac/logger/Logger',
-        'jac/utils/EventUtils',
-        'jac/events/JacEvent',
-        'jac/events/GlobalEventBus',
-        'FeatureDetector'
-    ],
-    function (DOC, EventDispatcher, ObjUtils, L, EventUtils, JacEvent, GEB, FD) {
-        return (function () {
-            /**
-             * Creates a UIManager object
-             * @extends {EventDispatcher}
-             * @constructor
-             */
-            function UIManager() {
-                //super
-                EventDispatcher.call(this);
+import L from 'jac/logger/Logger';
+import EventUtils from 'jac/utils/EventUtils';
+import EventDispatcher from 'jac/events/EventDispatcher';
+import GEB from 'jac/events/GlobalEventBus';
+import JacEvent from 'jac/events/JacEvent';
+import FD from 'FeatureDetector';
 
-                let self = this;
-                this.geb = new GEB();
-                this.prefs = {};
-                this.isConnected = false;
+export default class UIManager extends EventDispatcher {
+    constructor($doc) {
+        super();
+        this.doc = $doc;
 
-                //Delegates
-                //this.copyLogButtonClickDelegate = EventUtils.bind(self, self.handleCopyLogClick);
-                //this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
-                this.debugButtonClickDelegate = EventUtils.bind(self, self.handleDebugClick);
+    }
 
-                //DOM
-                //this.copyLogButton = DOC.getElementById('copyLogButton');
-                //this.clearLogButton = DOC.getElementById('clearLogButton');
-                //this.scrollLogCheckBox = DOC.getElementById('scrollLogCheckBox');
-                this.body = DOC.body;
-                this.mainDiv = DOC.getElementById('mainDiv');
-                this.debugButton = DOC.getElementById('debugButton');
+    init() {
+        let self = this;
+        this.geb = new GEB();
+        this.prefs = {};
 
-                //Events
-                // EventUtils.addDomListener(self.copyLogButton, 'click', self.copyLogButtonClickDelegate);
-                // EventUtils.addDomListener(self.clearLogButton, 'click', self.clearLogButtonClickDelegate);
-                EventUtils.addDomListener(self.debugButton, 'click', self.debugButtonClickDelegate);
-                L.debug('New UI Manager');
+        //Delegates
+        //this.copyLogButtonClickDelegate = EventUtils.bind(self, self.handleCopyLogClick);
+        //this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
+        this.debugButtonClickDelegate = EventUtils.bind(self, self.handleDebugClick);
 
-                // self.body.addEventListener('focusin', function($evt) {
-                //     L.debug('Focus: ', $evt.target.id, $evt.target);
-                // });
+        //DOM
+        //this.copyLogButton = this.doc.getElementById('copyLogButton');
+        //this.clearLogButton = this.doc.getElementById('clearLogButton');
+        //this.scrollLogCheckBox = this.doc.getElementById('scrollLogCheckBox');
+        this.body = this.doc.body;
+        this.mainDiv = this.doc.getElementById('mainDiv');
+        this.debugButton = this.doc.getElementById('debugButton');
 
-                //Set up electron requires
-                if (FD.isRunningInElectron()) {
-                    this.remote = nodeRequire('electron').remote;
-                    this.dialog = this.remote.dialog;
-                    this.fs = nodeRequire('fs');
-                    this.ipcRenderer = nodeRequire('electron').ipcRenderer;
-                    this.clipboard = nodeRequire('electron').clipboard;
+        //Events
+        // EventUtils.addDomListener(self.copyLogButton, 'click', self.copyLogButtonClickDelegate);
+        // EventUtils.addDomListener(self.clearLogButton, 'click', self.clearLogButtonClickDelegate);
+        EventUtils.addDomListener(self.debugButton, 'click', self.debugButtonClickDelegate);
+        L.debug('New UI Manager');
 
-                    this.remote.getCurrentWindow().toggleDevTools();
+        // self.body.addEventListener('focusin', function($evt) {
+        //     L.debug('Focus: ', $evt.target.id, $evt.target);
+        // });
 
-                    this.ipcRenderer.on('newlogdata', ($e, $data) => {
-                        L.debug('New Log Data: ', $data);
+        //Set up electron requires
+        if (FD.isRunningInElectron()) {
+            this.remote = nodeRequire('electron').remote;
+            this.dialog = this.remote.dialog;
+            this.ipcRenderer = nodeRequire('electron').ipcRenderer;
+            this.clipboard = nodeRequire('electron').clipboard;
 
-                        let p = DOC.createElement('p');
-                        let textNode = DOC.createTextNode($data);
-                        p.appendChild(textNode);
-                        this.mainDiv.appendChild(p);
+            this.remote.getCurrentWindow().toggleDevTools();
 
-                    });
+            this.ipcRenderer.on('newlogdata', ($e, $data) => {
+                L.debug('New Log Data: ', $data);
 
-                    this.ipcRenderer.on('logToGUI', ($e, $msg) => {
-                        let p = DOC.createElement('p');
-                        p.style.color = "#555555";
-                        let textNode = DOC.createTextNode($msg);
-                        p.appendChild(textNode);
-                        this.mainDiv.appendChild(p);
-                    });
+                let p = this.doc.createElement('p');
+                let textNode = this.doc.createTextNode($data);
+                p.appendChild(textNode);
+                this.mainDiv.appendChild(p);
 
-                    //get prefs
-                    this.disableButtons();
-                    this.ipcRenderer.send('requestPrefs', function ($e) {
-                        L.log('Loading User Preferences...');
-                    });
+            });
 
-                    this.ipcRenderer.on('gotPrefs', function ($e, $msg) {
-                        self.prefs = $msg;
-                        if (self.prefs) {
-                            //TODO: Set preferences here
-                            // if(typeof(self.prefs['dataDir']) !== 'undefined'){
-                            //     L.debug('Setting Data from Prefs');
-                            //     //self.dataDirInput.value = self.prefs['dataDir'];
-                            //
-                            // } else {
-                            //     L.debug('No previous data dir saved');
-                            // }
+            this.ipcRenderer.on('logToGUI', ($e, $msg) => {
+                let p = this.doc.createElement('p');
+                p.style.color = "#555555";
+                let textNode = this.doc.createTextNode($msg);
+                p.appendChild(textNode);
+                this.mainDiv.appendChild(p);
+            });
 
-                        } else {
-                            L.log('No previous preferences saved.');
-                        }
-                        self.enableButtons();
-                    });
-                }
-            }
+            //get prefs
+            this.disableButtons();
+            this.ipcRenderer.send('requestPrefs', function ($e) {
+                L.log('Loading User Preferences...');
+            });
 
-            //Inherit / Extend
-            ObjUtils.inheritPrototype(UIManager, EventDispatcher);
-            let p = UIManager.prototype;
+            this.ipcRenderer.on('gotPrefs', function ($e, $msg) {
+                self.prefs = $msg;
+                if (self.prefs) {
+                    //TODO: Set preferences here
+                    // if(typeof(self.prefs['dataDir']) !== 'undefined'){
+                    //     L.debug('Setting Data from Prefs');
+                    //     //self.dataDirInput.value = self.prefs['dataDir'];
+                    //
+                    // } else {
+                    //     L.debug('No previous data dir saved');
+                    // }
 
-            p.sendMessageToIPCR = function ($message, $payload) {
-                if (FD.isRunningInElectron()) {
-                    this.ipcRenderer.send($message, $payload);
                 } else {
-                    L.warn('Not running under electron, message not sent: ' + $message);
+                    L.log('No previous preferences saved.');
                 }
-            };
+                self.enableButtons();
+            });
+        }
+    }
 
-            p.handleCopyLogClick = function ($e) {
-                //this.clipboard.writeText(this.logTextArea.value);
-                //this.logToGUI('Log copied to clipboard');
-            };
+    sendMessageToIPCR($message, $payload) {
+        if (FD.isRunningInElectron()) {
+            this.ipcRenderer.send($message, $payload);
+        } else {
+            L.warn('Not running under electron, message not sent: ' + $message);
+        }
+    }
 
-            p.handleClearLogClick = function ($e) {
-                // this.logTextArea.value = '';
-            };
+    handleCopyLogClick($e) {
+        //this.clipboard.writeText(this.logTextArea.value);
+        //this.logToGUI('Log copied to clipboard');
+    }
 
-            p.handleDebugClick = function ($e) {
-                if (FD.isRunningInElectron()) {
-                    this.remote.getCurrentWindow().toggleDevTools();
-                }
-            };
+    handleClearLogClick($e) {
+        // this.logTextArea.value = '';
+    }
 
-            p.savePrefs = function () {
-                L.debug("Save Prefs");
-            };
+    handleDebugClick($e) {
+        if (FD.isRunningInElectron()) {
+            this.remote.getCurrentWindow().toggleDevTools();
+        }
+    }
 
-            p.disableButtons = function () {
-                //this.copyLogButton.disabled = true;
-                //this.clearLogButton.disabled = true;
-            };
+    savePrefs() {
+        L.debug("Save Prefs");
+    }
 
-            p.enableButtons = function () {
-                //this.copyLogButton.disabled = false;
-                //this.clearLogButton.disabled = false;
-                //this.resetUI();
-            };
+    disableButtons() {
+        //this.copyLogButton.disabled = true;
+        //this.clearLogButton.disabled = true;
+    }
 
-            p.handleDebugClick = function ($e) {
-                if (FD.isRunningInElectron()) {
-                    this.remote.getCurrentWindow().toggleDevTools();
-                }
-            };
+    enableButtons() {
+        //this.copyLogButton.disabled = false;
+        //this.clearLogButton.disabled = false;
+        //this.resetUI();
+    }
 
-            p.logToGUI = function ($msg) {
-                // this.logTextArea.value += ($msg + '\n');
-                // if(this.scrollLogCheckBox.checked){
-                //      this.logTextArea.scrollTop = this.logTextArea.scrollHeight;
-                // }
+    handleDebugClick($e) {
+        if (FD.isRunningInElectron()) {
+            this.remote.getCurrentWindow().toggleDevTools();
+        }
+    }
 
-            };
-            //Return constructor
-            return UIManager;
-        })();
-    });
+    logToGUI($msg) {
+        // this.logTextArea.value += ($msg + '\n');
+        // if(this.scrollLogCheckBox.checked){
+        //      this.logTextArea.scrollTop = this.logTextArea.scrollHeight;
+        // }
+
+    }
+}

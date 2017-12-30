@@ -3,11 +3,17 @@ import VerboseLevel from 'jac/logger/VerboseLevel';
 import LogLevel from 'jac/logger/LogLevel';
 import ConsoleTarget from 'jac/logger/ConsoleTarget';
 import FD from 'FeatureDetector';
+import whenDomReady from 'when-dom-ready';
+import UIManager from 'UIManager';
+
+//Import through loaders
+import '../css/main.css';
 
 L.addLogTarget(new ConsoleTarget());
 L.verboseFilter = (VerboseLevel.NORMAL | VerboseLevel.TIME | VerboseLevel.LEVEL | VerboseLevel.LINE);
 L.levelFilter = (LogLevel.DEBUG | LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
-//L.debug('New Main!');
+L.debug('New Render Main!');
+
 let mainObj = {};
 
 if(FD.isRunningInElectron()){
@@ -22,6 +28,11 @@ if(FD.isRunningInElectron()){
     L.log('Not Running Under Electron');
 }
 
+ let uiManager = new UIManager(document);
+ //L.addLogTarget(new UILogTarget(uiManager), true);
+
 //Set up UI Manager
-// let uiManager = new UIManager();
-// L.addLogTarget(new UILogTarget(uiManager), true);
+whenDomReady()
+    .then(() => {
+        uiManager.init();
+    });
