@@ -24,21 +24,24 @@ export default class UIManager extends EventDispatcher {
 
         //Delegates
         this.saveLogButtonClickDelegate = EventUtils.bind(self, self.handleSaveLogClick);
+        this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
 
         //DOM
         this.body = this.doc.body;
         this.mainDiv = this.doc.getElementById('mainDiv');
         this.logDiv = this.doc.getElementById('logDiv');
         this.saveLogButton = this.doc.getElementById('saveLogButton');
-        this.fs = nodeRequire('fs');
+        this.clearLogButton = this.doc.getElementById('clearLogButton');
 
         L.debug('Save Log Button: ', this.saveLogButton);
 
         //Events
         EventUtils.addDomListener(self.saveLogButton, 'click', self.saveLogButtonClickDelegate);
+        EventUtils.addDomListener(self.clearLogButton, 'click', self.clearLogButtonClickDelegate);
 
         //Set up electron requires
         if (FD.isRunningInElectron()) {
+            this.fs = nodeRequire('fs');
             this.remote = nodeRequire('electron').remote;
             this.dialog = this.remote.dialog;
             this.ipcRenderer = nodeRequire('electron').ipcRenderer;
@@ -111,13 +114,16 @@ export default class UIManager extends EventDispatcher {
         }
     }
 
-    handleCopyLogClick($e) {
-        //this.clipboard.writeText(this.logTextArea.value);
-        //this.logToGUI('Log copied to clipboard');
-    }
-
     handleClearLogClick($e) {
-        // this.logTextArea.value = '';
+        L.debug('Caught Clear Log Click');
+        let logPs = this.logDiv.getElementsByTagName('p');
+        let numLogPs = logPs.length;
+        for(let el in numLogPs){
+            el.parentNode.removeChild(el);
+        }
+        for(let i = numLogPs -1; i >= 0; i--){
+            logPs[i].parentNode.removeChild(logPs[i]);
+        }
     }
 
     handleSaveLogClick($e) {
@@ -126,6 +132,7 @@ export default class UIManager extends EventDispatcher {
         L.debug('Log entries to save: ' + logPs.length);
 
         if(logPs.length > 0){
+            this.disableButtons();
             this.dialog.showSaveDialog(
                 {
                     title: 'Save Log File',
@@ -141,11 +148,13 @@ export default class UIManager extends EventDispatcher {
                         wstream.on('error', ($e) => {
                             L.error('Log Write Error: ', $e);
                             this.generateLogLine('ERROR: Log Write Error: ', $e.toString(), true);
+                            this.enableButtons();
                         });
 
                         wstream.on('finish', () => {
                             L.debug('Log File Written To: ' + $filename);
                             this.generateLogLine('Log File Written To: ' + $filename, true);
+                            this.enableButtons();
                         });
 
                         for(let i = 0; i < logPs.length; i++){
@@ -154,6 +163,7 @@ export default class UIManager extends EventDispatcher {
                         wstream.end();
                     } else {
                         this.generateLogLine('Log File Save Canceled', true);
+                        this.enableButtons();
                     }
 
                 }
@@ -161,6 +171,7 @@ export default class UIManager extends EventDispatcher {
         } else {
             L.error('No Log Lines To Save');
             this.generateLogLine('ERROR: No log to save', true);
+            this.enableButtons();
         }
 
     }
@@ -178,21 +189,23 @@ export default class UIManager extends EventDispatcher {
     }
 
     disableButtons() {
-        //this.copyLogButton.disabled = true;
-        //this.clearLogButton.disabled = true;
+        this.saveLogButton.disabled = true;
+        this.clearLogButton.disabled = true;
     }
 
     enableButtons() {
-        //this.copyLogButton.disabled = false;
-        //this.clearLogButton.disabled = false;
+        this.saveLogButton.disabled = false;
+        this.clearLogButton.disabled = false;
         //this.resetUI();
     }
 
+/*
     handleDebugClick($e) {
         if (FD.isRunningInElectron()) {
             this.remote.getCurrentWindow().toggleDevTools();
         }
     }
+*/
 
     logToGUI($msg) {
         // this.logTextArea.value += ($msg + '\n');
