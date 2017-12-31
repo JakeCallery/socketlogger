@@ -23,16 +23,19 @@ export default class UIManager extends EventDispatcher {
         this.prefs = {};
 
         //Delegates
-        this.debugButtonClickDelegate = EventUtils.bind(self, self.handleDebugClick);
+        this.saveLogButtonClickDelegate = EventUtils.bind(self, self.handleSaveLogClick);
 
         //DOM
         this.body = this.doc.body;
         this.mainDiv = this.doc.getElementById('mainDiv');
-        this.debugButton = this.doc.getElementById('debugButton');
         this.logDiv = this.doc.getElementById('logDiv');
+        this.saveLogButton = this.doc.getElementById('saveLogButton');
+        this.fs = nodeRequire('fs');
+
+        L.debug('Save Log Button: ', this.saveLogButton);
 
         //Events
-        EventUtils.addDomListener(self.debugButton, 'click', self.debugButtonClickDelegate);
+        EventUtils.addDomListener(self.saveLogButton, 'click', self.saveLogButtonClickDelegate);
 
         //Set up electron requires
         if (FD.isRunningInElectron()) {
@@ -40,6 +43,7 @@ export default class UIManager extends EventDispatcher {
             this.dialog = this.remote.dialog;
             this.ipcRenderer = nodeRequire('electron').ipcRenderer;
             this.clipboard = nodeRequire('electron').clipboard;
+            this.dialog = this.remote.dialog;
 
             L.debug('IsDebugMode: ', this.remote.getGlobal('isDebugMode'));
 
@@ -109,11 +113,49 @@ export default class UIManager extends EventDispatcher {
         // this.logTextArea.value = '';
     }
 
+    handleSaveLogClick($e) {
+        L.debug('Save Log Clicked');
+        this.dialog.showSaveDialog(
+            {
+                title: 'Save Log File',
+                filters: [
+                    {name: 'Log File', extensions: ['log']}
+                ]
+            },
+            ($filename) => {
+                L.debug('FileName: ' + $filename);
+                let wstream = this.fs.createWriteStream($filename);
+
+                wstream.on('error', ($e) => {
+                    L.error('Log Write Error: ', $e);
+                });
+
+                wstream.on('finish', () => {
+                    L.debug('Log File Written To: ' + $filename);
+                });
+
+                //get child p's from LogDiv
+                let logPs = this.logDiv.getElementsByTagName('p');
+                L.debug(logPs);
+                L.debug('Num Ps: ' + logPs.length);
+                L.debug('Content: ', logPs[0].innerHTML.toString());
+
+                for(let i = 0; i < logPs.length; i++){
+                    wstream.write(logPs[i].innerHTML.toString() + '\n');
+                }
+
+                wstream.end();
+            }
+        );
+    }
+
+/*
     handleDebugClick($e) {
         if (FD.isRunningInElectron()) {
             this.remote.getCurrentWindow().toggleDevTools();
         }
     }
+*/
 
     savePrefs() {
         L.debug("Save Prefs");
