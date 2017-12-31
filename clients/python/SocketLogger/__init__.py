@@ -26,7 +26,7 @@ class SocketHandler(logging.Handler):
                 total_sent = total_sent + sent
 
                 if sent != len(log_entry):
-                    print("Partial Message Sent: " + str(sent) + "/" + str(total_sent) + "/" + str(len(log_entry)))
+                    print("!!!! Partial Message Sent: " + str(sent) + "/" + str(total_sent) + "/" + str(len(log_entry)))
 
 
 class SocketLogger:
@@ -38,7 +38,7 @@ class SocketLogger:
         self.log_socket = None
 
     def log(self, message=""):
-        self.logger.log(logging.DEBUG, message)
+        self.logger.log(logging.DEBUG, message + "\\n")
 
     def create_logger(self, name=""):
         logger = logging.getLogger(name)
@@ -46,13 +46,13 @@ class SocketLogger:
 
     def add_console_logger(self):
         stdout_handler = logging.StreamHandler(sys.stdout)
-        stdout_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+        stdout_handler.setFormatter(logging.Formatter("[%(levelname)s] %(asctime)s: %(message)s"))
         stdout_handler.setLevel(self.log_level)
         self.logger.addHandler(stdout_handler)
 
     def add_file_logger(self, file_path):
         file_handler = logging.FileHandler(file_path)
-        file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+        file_handler.setFormatter(logging.Formatter("[%(levelname)s] %(asctime)s: %(message)s"))
         file_handler.setLevel(self.log_level)
         self.logger.addHandler(file_handler)
 

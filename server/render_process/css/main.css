@@ -64,47 +64,6 @@ td {
     margin-top: 15px;
 }
 
-.actionWrapperDiv {
-    display:flex;
-    width: calc(100% - 50px);
-    margin-left: 22px;
-}
-
-.actionWrapperDiv > div {
-    flex:1;
-}
-
-.killJobDiv {
-    padding: 0;
-    margin: 0;
-    outline: none;
-}
-
-.forceDeleteCheckbox {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
-.jobIdLabel {
-    padding: 0;
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-    display:inline;
-}
-
-.jobIdInput {
-    background-color: #2b3f49;
-    border: solid #ffffff 2px;
-    width: 100px;
-    height: 35px;
-    text-decoration-color: #FFFFFF;
-    color: #ffffff;
-    padding-left: 10px;
-    font-size: 1.0em;
-}
-
 .formDiv {
     margin-left: 20px;
 }
@@ -129,53 +88,6 @@ td {
     font-size: 1.0em;
 }
 
-.jobStatusDiv {
-    margin-left: 22px;
-    height: calc(100% - 475px);
-    width: calc(100% - 50px);
-}
-
-.jobStatusTable {
-    text-align: left;
-    width: 100%;
-    background-color: #2b3f49;
-    overflow-y: scroll;
-    display: block;
-    height: calc(100% - 5px);
-    border: none;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-table.jobStatusTable th {
-    font-weight: bolder;
-    font-size: 1em;
-    border-bottom: 1px solid white;
-    pointer-events: none;
-    padding: 10px 10px 3px 0;
-}
-
-table.jobStatusTable td {
-    padding: 10px 10px 5px 0;
-    cursor: pointer;
-    margin: 0;
-}
-
-table.jobStatusTable tr {
-    background-color: #2b3f49;
-    pointer-events: auto;
-    cursor: pointer;
-}
-
-table.jobStatusTable tr:hover {
-    background: #517689;
-    cursor: hand;
-}
-
-.actionButtonGroup {
-    text-align: left;
-    margin: 0 0 5px 22px;
-}
 /*****************************************
 *** COMMON
 ******************************************/
@@ -241,13 +153,14 @@ table.jobStatusTable tr:hover {
 }
 
 .logDiv {
+    padding: 0.2em 0.2em 0.2em 0.2em;
     margin-top: 1.0em;
-    margin-left: 22px;
-    position:absolute;
-    top: calc(100% - 325px);
-    bottom: 50px;
-    right: 28px;
-    left: 0;
+    margin-left: 0.2em;
+    margin-bottom: 0.3em;
+    margin-right: 0.2em;
+    height: 90%;
+    background-color: #2b3f49;
+    overflow-y: scroll;
 }
 
 /*****************************************
@@ -266,6 +179,7 @@ table.jobStatusTable tr:hover {
     border: 0;
     border-radius: 7px;
     outline: none;
+    margin: 0;
 }
 
 .simpleButton:focus {
@@ -283,12 +197,6 @@ table.jobStatusTable tr:hover {
     cursor: default;
 }
 
-.browseButton {
-    vertical-align: middle;
-    width: 50px;
-    height: 30px;
-    font-size: 1.5em;
-}
 .buttonGroup {
     position: absolute;
     bottom: 5px;

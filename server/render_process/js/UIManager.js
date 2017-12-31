@@ -23,27 +23,16 @@ export default class UIManager extends EventDispatcher {
         this.prefs = {};
 
         //Delegates
-        //this.copyLogButtonClickDelegate = EventUtils.bind(self, self.handleCopyLogClick);
-        //this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
         this.debugButtonClickDelegate = EventUtils.bind(self, self.handleDebugClick);
 
         //DOM
-        //this.copyLogButton = this.doc.getElementById('copyLogButton');
-        //this.clearLogButton = this.doc.getElementById('clearLogButton');
-        //this.scrollLogCheckBox = this.doc.getElementById('scrollLogCheckBox');
         this.body = this.doc.body;
         this.mainDiv = this.doc.getElementById('mainDiv');
         this.debugButton = this.doc.getElementById('debugButton');
+        this.logDiv = this.doc.getElementById('logDiv');
 
         //Events
-        // EventUtils.addDomListener(self.copyLogButton, 'click', self.copyLogButtonClickDelegate);
-        // EventUtils.addDomListener(self.clearLogButton, 'click', self.clearLogButtonClickDelegate);
         EventUtils.addDomListener(self.debugButton, 'click', self.debugButtonClickDelegate);
-        L.debug('New UI Manager');
-
-        // self.body.addEventListener('focusin', function($evt) {
-        //     L.debug('Focus: ', $evt.target.id, $evt.target);
-        // });
 
         //Set up electron requires
         if (FD.isRunningInElectron()) {
@@ -55,7 +44,7 @@ export default class UIManager extends EventDispatcher {
             L.debug('IsDebugMode: ', this.remote.getGlobal('isDebugMode'));
 
             if(this.remote.getGlobal('isDebugMode').toString() === 'true'){
-                this.remote.getCurrentWindow().toggleDevTools();
+                this.remote.getCurrentWindow().openDevTools();
             }
 
             this.ipcRenderer.on('newlogdata', ($e, $data) => {
@@ -64,7 +53,7 @@ export default class UIManager extends EventDispatcher {
                 let p = this.doc.createElement('p');
                 let textNode = this.doc.createTextNode($data);
                 p.appendChild(textNode);
-                this.mainDiv.appendChild(p);
+                this.logDiv.appendChild(p);
 
             });
 

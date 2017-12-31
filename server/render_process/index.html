@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Socket Logger</title>
-    <style id="tabHelper"></style>
-</head>
-<script>
-    if (window.require) {
-        window.nodeRequire = require;
-        delete window.require;
-        delete window.exports;
-        delete window.module;
-    }
-</script>
-
-<body
-            onmousedown="document.getElementById('tabHelper').innerHTML=''"
-            onkeydown="document.getElementById('tabHelper').innerHTML=
-            'button:focus{background:#69919B}' +
-             '.simpleCheckBox:focus{background:#69919B; outline:1px solid #69919B;}'"
-    >
-        <div class="mainDiv" id="mainDiv">
-            <button id="debugButton">Debug</button>
-            <br>
-            Hello
-        </div>
-    </body>
-
-
+    <head>
+        <meta charset="UTF-8">
+        <title>Socket Logger</title>
+        <style id="tabHelper"></style>
+    </head>
 
     <script>
-        // You can also require other files to run in this process
-        //nodeRequire('../render_process/js/app/render_main.js')
+        if (window.require) {
+            window.nodeRequire = require;
+            delete window.require;
+            delete window.exports;
+            delete window.module;
+        }
     </script>
+
+    <body
+        onmousedown="document.getElementById('tabHelper').innerHTML=''"
+        onkeydown="document.getElementById('tabHelper').innerHTML=
+        'button:focus{background:#69919B}' +
+         '.simpleCheckBox:focus{background:#69919B; outline:1px solid #69919B;}'"
+    >
+
+        <div class="mainDiv" id="mainDiv">
+            <div class="logDiv" id="logDiv">
+                Test Text
+            </div>
+            <button class="simpleButton" id="debugButton">Debug</button>
+            <br>
+
+
+        </div>
+
+    </body>
 
 </html>
