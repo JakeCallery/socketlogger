@@ -41,7 +41,6 @@
     "electron": "1.8.1",
     "electron-json-storage": "4.0.2",
     "shortid": "2.2.8",
-    "webpack": "2.3.3",
     "whatwg-fetch": "2.0.3",
     "when-dom-ready": "1.2.12",
     "winston": "2.4.0"
