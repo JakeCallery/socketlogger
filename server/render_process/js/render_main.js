@@ -11,6 +11,7 @@ import UILogTarget from 'UILogTarget';
 import '../css/main.css';
 
 L.addLogTarget(new ConsoleTarget());
+
 L.verboseFilter = (VerboseLevel.NORMAL | VerboseLevel.TIME | VerboseLevel.LEVEL | VerboseLevel.LINE);
 L.levelFilter = (LogLevel.DEBUG | LogLevel.INFO | LogLevel.WARNING | LogLevel.ERROR);
 L.debug('New Render Main!');
@@ -29,8 +30,8 @@ if(FD.isRunningInElectron()){
     L.log('Not Running Under Electron');
 }
 
- let uiManager = new UIManager(document);
- L.addLogTarget(new UILogTarget(uiManager), true);
+let uiManager = new UIManager(document);
+L.addLogTarget(new UILogTarget(uiManager), true);
 
 //Set up UI Manager
 whenDomReady()

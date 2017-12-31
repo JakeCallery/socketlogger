@@ -100,7 +100,7 @@ function handleAppReady() {
 
     l.debug('Main Window Ready');
 
-    sm.initServer();
+    sm.initServer(mainWindow);
     sm.on('newlogdata', ($data) => {
         //l.debug('Main Caught New Log Data: ', $data);
         mainWindow.webContents.send('newlogdata', $data);

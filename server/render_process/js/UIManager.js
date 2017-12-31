@@ -32,6 +32,7 @@ export default class UIManager extends EventDispatcher {
         this.logDiv = this.doc.getElementById('logDiv');
         this.saveLogButton = this.doc.getElementById('saveLogButton');
         this.clearLogButton = this.doc.getElementById('clearLogButton');
+        this.statusDiv = this.doc.getElementById('statusDiv');
 
         L.debug('Save Log Button: ', this.saveLogButton);
 
@@ -47,6 +48,10 @@ export default class UIManager extends EventDispatcher {
             this.ipcRenderer = nodeRequire('electron').ipcRenderer;
             this.clipboard = nodeRequire('electron').clipboard;
             this.dialog = this.remote.dialog;
+
+            if(this.remote.getGlobal('serverStatus') != 'undefined'){
+                this.setStatus(this.remote.getGlobal('serverStatus'));
+            }
 
             L.debug('IsDebugMode: ', this.remote.getGlobal('isDebugMode'));
 
@@ -66,6 +71,10 @@ export default class UIManager extends EventDispatcher {
                 // p.appendChild(textNode);
                 // this.mainDiv.appendChild(p);
                 L.log($msg);
+            });
+
+            this.ipcRenderer.on('serverStatus', ($e, $msg) => {
+                this.setStatus($msg);
             });
 
             //get prefs
@@ -92,6 +101,10 @@ export default class UIManager extends EventDispatcher {
                 self.enableButtons();
             });
         }
+    }
+
+    setStatus($status){
+        this.statusDiv.innerHTML = $status;
     }
 
     generateLogLine($data, $isInternal) {

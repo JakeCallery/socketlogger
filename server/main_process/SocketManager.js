@@ -28,13 +28,18 @@ class SocketManager extends EventEmitter {
         return this[singleton];
     }
 
-    initServer() {
+    initServer($mainWindow) {
         let self = this;
+        this.mainWindow = $mainWindow;
         self.server = net.createServer();
 
         self.server.on('listening', ($e) => {
             let address = self.server.address();
-            l.debug('Server Listening: ' + address.address + ':' + address.port);
+            let status = 'Server Listening: ' + address.address + ':' + address.port;
+            global.serverStatus = status;
+            l.debug(status);
+            this.mainWindow.webContents.send('logToGUI', status);
+            this.mainWindow.webContents.send('serverStatus', status);
         });
 
         self.server.on('error', ($e) => {
@@ -75,7 +80,7 @@ class SocketManager extends EventEmitter {
             l.debug('Port from command line: ', parseInt(lastArg));
             self.server.listen(parseInt(lastArg), '0.0.0.0');
         } else {
-            l.debug('using default port: 8999');
+            l.debug('Using default port: 8999');
             self.server.listen(8999, '0.0.0.0');
         }
 

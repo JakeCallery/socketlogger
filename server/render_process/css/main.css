@@ -50,15 +50,6 @@ td {
 /*****************************************
 *** DIVs
 ******************************************/
-.mainDiv {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
-    position: relative;
-    width: 100%;
-}
-
 .buttonDiv {
     margin-left: 22px;
     margin-top: 15px;
@@ -152,15 +143,37 @@ td {
     height:calc(100% - 33px);
 }
 
+.mainDiv {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
 .logDiv {
     padding: 0.2em 0.2em 0.2em 0.2em;
     margin-top: 0.2em;
     margin-left: 0.2em;
-    margin-bottom: 0.3em;
+    margin-bottom: 0;
     margin-right: 0.2em;
-    height: 90%;
+    height: calc(100% - 75px);
     background-color: #2b3f49;
     overflow-y: scroll;
+}
+
+.bottomDiv {
+    height: 40px;
+    padding: 12px 0 0 0.2em;
+    margin: 0;
+}
+
+.statusDiv {
+    float: right;
+    padding-right: 0.2em;
+    padding-top: 35px;
+    margin: 0;
 }
 
 /*****************************************
