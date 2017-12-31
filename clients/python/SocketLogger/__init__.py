@@ -38,7 +38,19 @@ class SocketLogger:
         self.log_socket = None
 
     def log(self, message=""):
+        self.logger.log(logging.INFO, message + "\\n")
+
+    def info(self, message=""):
+        self.logger.log(logging.INFO, message + "\\n")
+
+    def debug(self, message=""):
         self.logger.log(logging.DEBUG, message + "\\n")
+
+    def error(self, message=""):
+        self.logger.log(logging.ERROR, message + "\\n")
+
+    def warning(self, message=""):
+        self.logger.log(logging.WARNING, message + "\\n")
 
     def create_logger(self, name=""):
         logger = logging.getLogger(name)
