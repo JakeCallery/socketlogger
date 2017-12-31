@@ -94,16 +94,27 @@ export default class UIManager extends EventDispatcher {
         }
     }
 
-    generateLogLine($data, $isInternal){
+    generateLogLine($data, $isInternal) {
         let p = this.doc.createElement('p');
         let textNode = this.doc.createTextNode($data);
         p.appendChild(textNode);
         this.logDiv.appendChild(p);
 
-        if($isInternal) {
-            p.style.color = '#888888';
-        }
+        let tokens = $data.split(' ');
 
+        if ($isInternal) {
+            p.style.color = '#888888';
+        } else if (tokens[0] === '[DEBUG]') {
+            p.style.color = '#f07e1f';
+        } else if (tokens[0] === '[ERROR]') {
+            p.style.color = '#cc0000';
+        } else if (tokens[0] === '[WARNING]') {
+            p.style.color = '#fffa94';
+        } else if (tokens[0] === '[INFO]') {
+            p.style.color = '#ffffff';
+        } else {
+            p.style.color = '#ffffff';
+        }
     }
 
     sendMessageToIPCR($message, $payload) {
