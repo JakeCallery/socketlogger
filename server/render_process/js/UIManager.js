@@ -53,12 +53,7 @@ export default class UIManager extends EventDispatcher {
 
             this.ipcRenderer.on('newlogdata', ($e, $data) => {
                 L.debug('New Log Data: ', $data);
-
-                let p = this.doc.createElement('p');
-                let textNode = this.doc.createTextNode($data);
-                p.appendChild(textNode);
-                this.logDiv.appendChild(p);
-
+                this.generateLogLine($data);
             });
 
             this.ipcRenderer.on('logToGUI', ($e, $msg) => {
@@ -96,6 +91,18 @@ export default class UIManager extends EventDispatcher {
         }
     }
 
+    generateLogLine($data, $isInternal){
+        let p = this.doc.createElement('p');
+        let textNode = this.doc.createTextNode($data);
+        p.appendChild(textNode);
+        this.logDiv.appendChild(p);
+
+        if($isInternal) {
+            p.style.color = '#888888';
+        }
+
+    }
+
     sendMessageToIPCR($message, $payload) {
         if (FD.isRunningInElectron()) {
             this.ipcRenderer.send($message, $payload);
@@ -128,23 +135,31 @@ export default class UIManager extends EventDispatcher {
 
                 wstream.on('error', ($e) => {
                     L.error('Log Write Error: ', $e);
+                    this.generateLogLine('ERROR: Log Write Error: ', $e.toString(), true);
                 });
 
                 wstream.on('finish', () => {
                     L.debug('Log File Written To: ' + $filename);
+                    this.generateLogLine('Log File Written To: ' + $filename, true);
                 });
 
                 //get child p's from LogDiv
                 let logPs = this.logDiv.getElementsByTagName('p');
-                L.debug(logPs);
-                L.debug('Num Ps: ' + logPs.length);
-                L.debug('Content: ', logPs[0].innerHTML.toString());
+                if(logPs.length > 0){
+                    L.debug(logPs);
+                    L.debug('Num Ps: ' + logPs.length);
+                    L.debug('Content: ', logPs[0].innerHTML.toString());
 
-                for(let i = 0; i < logPs.length; i++){
-                    wstream.write(logPs[i].innerHTML.toString() + '\n');
+                    for(let i = 0; i < logPs.length; i++){
+                        wstream.write(logPs[i].innerHTML.toString() + '\n');
+                    }
+
+                    wstream.end();
+                } else {
+                    L.error('No Log Lines To Save');
+                    this.generateLogLine('ERROR: No log to save', true);
                 }
 
-                wstream.end();
             }
         );
     }

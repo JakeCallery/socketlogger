@@ -1,0 +1,2 @@
+Clean up LogToGUI
+  Make a LogToRenderConsole and LogToGUI instead
