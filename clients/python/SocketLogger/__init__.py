@@ -80,7 +80,7 @@ class SocketLogger:
 
         #Set up log handler
         socket_handler = SocketHandler(self)
-        socket_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+        socket_handler.setFormatter(logging.Formatter("[%(levelname)s] %(asctime)s: %(message)s"))
         socket_handler.setLevel(self.log_level)
         self.logger.addHandler(socket_handler)
 

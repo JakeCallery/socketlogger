@@ -30,6 +30,14 @@ const jStorage = require('electron-json-storage');
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
+//Global Vars Between processes
+if(process.env.socketloggerdebug.toString() === 'true'){
+    l.debug('Running in DEBUG mode');
+    global.isDebugMode = true;
+} else {
+    global.isDebugMode = false;
+}
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;

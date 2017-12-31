@@ -52,7 +52,11 @@ export default class UIManager extends EventDispatcher {
             this.ipcRenderer = nodeRequire('electron').ipcRenderer;
             this.clipboard = nodeRequire('electron').clipboard;
 
-            this.remote.getCurrentWindow().toggleDevTools();
+            L.debug('IsDebugMode: ', this.remote.getGlobal('isDebugMode'));
+
+            if(this.remote.getGlobal('isDebugMode').toString() === 'true'){
+                this.remote.getCurrentWindow().toggleDevTools();
+            }
 
             this.ipcRenderer.on('newlogdata', ($e, $data) => {
                 L.debug('New Log Data: ', $data);
@@ -65,11 +69,12 @@ export default class UIManager extends EventDispatcher {
             });
 
             this.ipcRenderer.on('logToGUI', ($e, $msg) => {
-                let p = this.doc.createElement('p');
-                p.style.color = "#555555";
-                let textNode = this.doc.createTextNode($msg);
-                p.appendChild(textNode);
-                this.mainDiv.appendChild(p);
+                // let p = this.doc.createElement('p');
+                // p.style.color = "#555555";
+                // let textNode = this.doc.createTextNode($msg);
+                // p.appendChild(textNode);
+                // this.mainDiv.appendChild(p);
+                L.log($msg);
             });
 
             //get prefs
@@ -143,11 +148,9 @@ export default class UIManager extends EventDispatcher {
     }
 
     logToGUI($msg) {
-        console.log('Logging to GUI: ' + $msg);
         // this.logTextArea.value += ($msg + '\n');
         // if(this.scrollLogCheckBox.checked){
         //      this.logTextArea.scrollTop = this.logTextArea.scrollHeight;
         // }
-
     }
 }
