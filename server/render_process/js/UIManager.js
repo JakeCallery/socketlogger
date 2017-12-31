@@ -122,46 +122,47 @@ export default class UIManager extends EventDispatcher {
 
     handleSaveLogClick($e) {
         L.debug('Save Log Clicked');
-        this.dialog.showSaveDialog(
-            {
-                title: 'Save Log File',
-                filters: [
-                    {name: 'Log File', extensions: ['log']}
-                ]
-            },
-            ($filename) => {
-                L.debug('FileName: ' + $filename);
-                let wstream = this.fs.createWriteStream($filename);
+        let logPs = this.logDiv.getElementsByTagName('p');
+        L.debug('Log entries to save: ' + logPs.length);
 
-                wstream.on('error', ($e) => {
-                    L.error('Log Write Error: ', $e);
-                    this.generateLogLine('ERROR: Log Write Error: ', $e.toString(), true);
-                });
+        if(logPs.length > 0){
+            this.dialog.showSaveDialog(
+                {
+                    title: 'Save Log File',
+                    filters: [
+                        {name: 'Log File', extensions: ['log']}
+                    ]
+                },
+                ($filename) => {
+                    if($filename){
+                        L.debug('FileName: ' + $filename);
+                        let wstream = this.fs.createWriteStream($filename);
 
-                wstream.on('finish', () => {
-                    L.debug('Log File Written To: ' + $filename);
-                    this.generateLogLine('Log File Written To: ' + $filename, true);
-                });
+                        wstream.on('error', ($e) => {
+                            L.error('Log Write Error: ', $e);
+                            this.generateLogLine('ERROR: Log Write Error: ', $e.toString(), true);
+                        });
 
-                //get child p's from LogDiv
-                let logPs = this.logDiv.getElementsByTagName('p');
-                if(logPs.length > 0){
-                    L.debug(logPs);
-                    L.debug('Num Ps: ' + logPs.length);
-                    L.debug('Content: ', logPs[0].innerHTML.toString());
+                        wstream.on('finish', () => {
+                            L.debug('Log File Written To: ' + $filename);
+                            this.generateLogLine('Log File Written To: ' + $filename, true);
+                        });
 
-                    for(let i = 0; i < logPs.length; i++){
-                        wstream.write(logPs[i].innerHTML.toString() + '\n');
+                        for(let i = 0; i < logPs.length; i++){
+                            wstream.write(logPs[i].innerHTML.toString() + '\n');
+                        }
+                        wstream.end();
+                    } else {
+                        this.generateLogLine('Log File Save Canceled', true);
                     }
 
-                    wstream.end();
-                } else {
-                    L.error('No Log Lines To Save');
-                    this.generateLogLine('ERROR: No log to save', true);
                 }
+            );
+        } else {
+            L.error('No Log Lines To Save');
+            this.generateLogLine('ERROR: No log to save', true);
+        }
 
-            }
-        );
     }
 
 /*
