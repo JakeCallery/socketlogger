@@ -1,0 +1,11 @@
+Build GUI:
+.\socketlogger\server\webpack
+
+Build GUI while developing
+.\socketlogger\server\npm run watch
+(runs webpack in watch mode)
+
+Create Distribution:
+.\socketlogger\server\webpack
+.\socketlogger\server\npm run packagewindows
+
