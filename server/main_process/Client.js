@@ -13,7 +13,10 @@ class Client extends EventEmitter {
             l.debug('Client Data: ' + $data);
 
             let messages = $data.toString().split('\\n');
-            l.debug('Num Messages: ' + messages.length);
+            if(messages[messages.length-1].toString() === ''){
+                messages.pop();
+            }
+
             messages.forEach(($msg) => {
                 this.emit('newlogdata', $msg.toString());
             });
