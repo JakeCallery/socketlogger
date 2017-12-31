@@ -31,7 +31,7 @@ const jStorage = require('electron-json-storage');
 const BrowserWindow = electron.BrowserWindow;
 
 //Global Vars Between processes
-if(process.env.socketloggerdebug.toString() === 'true'){
+if(process.env.hasOwnProperty('socketloggerdebug') && process.env.socketloggerdebug.toString() === 'true'){
     l.debug('Running in DEBUG mode');
     global.isDebugMode = true;
 } else {
