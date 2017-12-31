@@ -4,6 +4,7 @@ const singleton = Symbol();
 const singletonEnforcer = Symbol();
 const net = require('net');
 const Client = require('./Client');
+const electron = require('electron');
 
 //Constructor
 class SocketManager extends EventEmitter {
@@ -65,8 +66,18 @@ class SocketManager extends EventEmitter {
             });
         });
 
-        self.server.listen(8999, '0.0.0.0');
-
+        //Get port from args
+        let args = process.argv;
+        let lastArg = args[args.length - 1];
+        l.debug('Args: ', args);
+        l.debug('Last Arg: ', lastArg);
+        if(Number.isInteger(parseInt(lastArg))){
+            l.debug('Port from command line: ', parseInt(lastArg));
+            self.server.listen(parseInt(lastArg), '0.0.0.0');
+        } else {
+            l.debug('using default port: 8999');
+            self.server.listen(8999, '0.0.0.0');
+        }
 
     }
 }
