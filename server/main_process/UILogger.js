@@ -78,8 +78,7 @@ UILogger.prototype.log = function (level, msg, meta, callback) {
     if(this.renderWindow){
         this.options.meta = meta;
         this.options.message = msg;
-        var output = String(this.options.formatter(this.clone(this.options)));
-        console.log('Trying to log to GUI: ', output);
+        let output = String(this.options.formatter(this.clone(this.options)));
         this.renderWindow.webContents.send('logToGUI', output);
     } else {
         console.log('Render window is not yet set for logger');

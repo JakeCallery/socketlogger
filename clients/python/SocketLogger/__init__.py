@@ -84,3 +84,14 @@ class SocketLogger:
         socket_handler.setLevel(self.log_level)
         self.logger.addHandler(socket_handler)
 
+    def close_socket_logger(self):
+        print("Closing Socket Logger...")
+        if self.log_socket is not None:
+            try:
+                self.log_socket.shutdown(socket.SHUT_RDWR)
+                self.log_socket.close()
+            except Exception as e:
+                print("Could Not Close Socket: " + str(e))
+
+
+
