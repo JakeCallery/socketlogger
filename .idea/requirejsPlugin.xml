@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RequirejsProjectComponent">
+    <option name="publicPath" value="server/render_process/js" />
+    <option name="configFilePath" value="config.js" />
+    <option name="baseUrl" value="../" />
+  </component>
+</project>
