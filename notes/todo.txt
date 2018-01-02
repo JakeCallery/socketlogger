@@ -3,7 +3,8 @@ Clean up LogToGUI
   Make a LogToRenderConsole and LogToGUI instead
 
 BUGS:
-
+Try Reconnect if Server is closed and reopened (sends after server close just fail)
+  (try reconnect if send fails, then resend)
 
 FINISHED:
 handle log attempt after socket close.
