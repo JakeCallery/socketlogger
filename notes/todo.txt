@@ -3,6 +3,9 @@ Clean up LogToGUI
   Make a LogToRenderConsole and LogToGUI instead
 
 BUGS:
+
+
+FINISHED:
 handle log attempt after socket close.
   Maybe use atexit: https://docs.python.org/2/library/atexit.html
   https://docs.python.org/2/library/atexit.html

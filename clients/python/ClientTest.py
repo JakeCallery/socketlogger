@@ -12,4 +12,3 @@ if __name__ == "__main__":
     logger.warning("This is a WARNING")
     logger.debug("This is a DEBUG")
     logger.info("This is an INFO")
-    logger.close_socket_logger()

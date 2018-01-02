@@ -1,12 +1,15 @@
 import logging
 import sys
 import socket
+import atexit
 
 
 class SocketHandler(logging.Handler):
     def __init__(self, socket_logger):
         super(SocketHandler, self).__init__()
         self.socket_logger = socket_logger
+        atexit.register(self.socket_logger.close_socket_logger)
+
 
     def emit(self, record):
         log_entry = self.format(record)
