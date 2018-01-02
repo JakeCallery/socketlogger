@@ -1,2 +1,6 @@
+TODO:
 Clean up LogToGUI
   Make a LogToRenderConsole and LogToGUI instead
+
+BUGS:
+handle log attempt after socket close.
