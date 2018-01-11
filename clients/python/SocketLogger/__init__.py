@@ -2,7 +2,6 @@ import logging
 import sys
 import socket
 import atexit
-from threading import Timer
 
 
 class SocketHandler(logging.Handler):
@@ -32,7 +31,6 @@ class SocketLogger:
         self.remote_host = None
         self.remote_port = None
         self.log_entry_buffer = []
-        self.reconnect_timer = "Test"
 
     def log(self, message=""):
         self.logger.log(logging.INFO, message + "\\n")
@@ -81,6 +79,7 @@ class SocketLogger:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.log_socket = s
+
         except socket.error as e:
             print("Failed to create Socket: " + str(e))
             sys.exit()
@@ -97,17 +96,20 @@ class SocketLogger:
         print("Connecting to remote server: " + host + "(" + remote_ip + ")")
         try:
             s.connect((remote_ip, port))
+
+            if len(self.log_entry_buffer) > 0:
+                for entry in self.log_entry_buffer:
+                    print("Sending Buffered Message")
+                    self.send_log_entry(entry)
+
         except Exception as e:
-            print("--------- Could not connect: " + str(e) + "-------------")
-            print("Will try again in 5 seconds")
-            print("Timer: " + str(self.reconnect_timer))
-            if self.reconnect_timer is None and is_reconnect_attempt is not True:
-                self.reconnect_timer = Timer(5.0, self.reconnect_socket(self.remote_host, self.remote_port))
-                self.reconnect_timer.start()
-            else:
-                print("Timer Already Running... waiting....")
+            print("--------- Could not connect: " + str(e))
+            if not is_reconnect_attempt:
+                print("Will Attempt a reconnect...")
+                self.reconnect_socket(self.remote_host, self.remote_port)
 
     def reconnect_socket(self, host, port):
+        print ("Attempting Reconnect")
         self.connect_socket(host, port, True)
 
     def close_socket_logger(self):
@@ -129,8 +131,7 @@ class SocketLogger:
                     print("Buffering Message...")
                     self.log_entry_buffer.append(log_entry)
                     print("Total Buffered Messages: " + str(len(self.log_entry_buffer)))
-
-                    # Start reconnect timer
+                    self.reconnect_socket(self.remote_host, self.remote_port)
                     break
 
                 if sent == 0:
