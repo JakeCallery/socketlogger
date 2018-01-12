@@ -169,21 +169,27 @@ td {
     margin: 0;
 }
 
-.statusDiv {
+.bottomRightDiv {
     float: right;
+    margin: 0;
+    padding: 0;
+    background-color: blueviolet;
+}
+
+.statusDiv {
     padding-right: 0.2em;
-    padding-top: 35px;
+    padding-top: 0;
     margin: 0;
 }
 
 .autoScrollCheckbox {
-    padding-top: 30px;
-    margin: 5px 0 0 0;
+
 }
 
 .autoScrollCheckboxLabel {
 
 }
+
 
 /*****************************************
 *** BUTTONS
@@ -239,6 +245,5 @@ td {
 }
 
 .simpleCheckboxLabel {
-    display: inline;
 
 }
