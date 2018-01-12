@@ -35,6 +35,7 @@ export default class UIManager extends EventDispatcher {
         this.clearLogButton = this.doc.getElementById('clearLogButton');
         this.statusDiv = this.doc.getElementById('statusDiv');
         this.autoScrollCheckbox = this.doc.getElementById('autoScrollCheckBox');
+        this.autoScrollCheckbox.checked = true;
 
         L.debug('Save Log Button: ', this.saveLogButton);
 

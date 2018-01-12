@@ -164,7 +164,8 @@ td {
 }
 
 .bottomDiv {
-    height: 40px;
+    float: left;
+    height: 100px;
     padding: 12px 0 0 0.2em;
     margin: 0;
 }
@@ -173,13 +174,12 @@ td {
     float: right;
     margin: 0;
     padding: 0;
-    background-color: blueviolet;
 }
 
 .statusDiv {
-    padding-right: 0.2em;
+    padding-right: 0;
     padding-top: 0;
-    margin: 0;
+    margin: 25px 0 0 0;
 }
 
 .autoScrollCheckbox {
@@ -188,6 +188,11 @@ td {
 
 .autoScrollCheckboxLabel {
 
+}
+
+.autoScrollDiv {
+    text-align: right;
+    margin-right: 5px;
 }
 
 
