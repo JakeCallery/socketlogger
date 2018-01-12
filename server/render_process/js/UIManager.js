@@ -25,6 +25,7 @@ export default class UIManager extends EventDispatcher {
         //Delegates
         this.saveLogButtonClickDelegate = EventUtils.bind(self, self.handleSaveLogClick);
         this.clearLogButtonClickDelegate = EventUtils.bind(self, self.handleClearLogClick);
+        this.handleAutoScrollCheckboxClickDelegate = EventUtils.bind(self, self.handleAutoScrollCheckboxClick);
 
         //DOM
         this.body = this.doc.body;
@@ -33,12 +34,14 @@ export default class UIManager extends EventDispatcher {
         this.saveLogButton = this.doc.getElementById('saveLogButton');
         this.clearLogButton = this.doc.getElementById('clearLogButton');
         this.statusDiv = this.doc.getElementById('statusDiv');
+        this.autoScrollCheckbox = this.doc.getElementById('autoScrollCheckBox');
 
         L.debug('Save Log Button: ', this.saveLogButton);
 
         //Events
         EventUtils.addDomListener(self.saveLogButton, 'click', self.saveLogButtonClickDelegate);
         EventUtils.addDomListener(self.clearLogButton, 'click', self.clearLogButtonClickDelegate);
+        EventUtils.addDomListener(self.autoScrollCheckbox, 'click', self.handleAutoScrollCheckboxClickDelegate);
 
         //Set up electron requires
         if (FD.isRunningInElectron()) {
@@ -62,6 +65,8 @@ export default class UIManager extends EventDispatcher {
             this.ipcRenderer.on('newlogdata', ($e, $data) => {
                 L.debug('New Log Data: ', $data);
                 this.generateLogLine($data);
+                this.updateScroll();
+
             });
 
             this.ipcRenderer.on('logToGUI', ($e, $msg) => {
@@ -103,6 +108,12 @@ export default class UIManager extends EventDispatcher {
         }
     }
 
+    updateScroll() {
+        if(this.autoScrollCheckbox.checked){
+            this.logDiv.scrollTop = this.logDiv.scrollHeight;
+        }
+    }
+
     setStatus($status){
         this.statusDiv.innerHTML = $status;
     }
@@ -136,6 +147,10 @@ export default class UIManager extends EventDispatcher {
         } else {
             L.warn('Not running under electron, message not sent: ' + $message);
         }
+    }
+
+    handleAutoScrollCheckboxClick($e) {
+        this.updateScroll();
     }
 
     handleClearLogClick($e) {

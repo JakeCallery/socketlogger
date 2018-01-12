@@ -176,6 +176,15 @@ td {
     margin: 0;
 }
 
+.autoScrollCheckbox {
+    padding-top: 30px;
+    margin: 5px 0 0 0;
+}
+
+.autoScrollCheckboxLabel {
+
+}
+
 /*****************************************
 *** BUTTONS
 ******************************************/
@@ -230,6 +239,6 @@ td {
 }
 
 .simpleCheckboxLabel {
-    display: block;
+    display: inline;
 
 }
