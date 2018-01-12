@@ -14,7 +14,7 @@ class SocketHandler(logging.Handler):
 
     def emit(self, record):
         log_entry = self.format(record)
-        print("Sending to Socket: " + str(log_entry))
+        log_entry = log_entry + "\\n"
         if self.socket_logger.log_socket is not None:
             self.socket_logger.send_log_entry(log_entry)
         else:
@@ -33,19 +33,19 @@ class SocketLogger:
         self.log_entry_buffer = []
 
     def log(self, message=""):
-        self.logger.log(logging.INFO, message + "\\n")
+        self.logger.log(logging.INFO, message)
 
     def info(self, message=""):
-        self.logger.log(logging.INFO, message + "\\n")
+        self.logger.log(logging.INFO, message)
 
     def debug(self, message=""):
-        self.logger.log(logging.DEBUG, message + "\\n")
+        self.logger.log(logging.DEBUG, message)
 
     def error(self, message=""):
-        self.logger.log(logging.ERROR, message + "\\n")
+        self.logger.log(logging.ERROR, message)
 
     def warning(self, message=""):
-        self.logger.log(logging.WARNING, message + "\\n")
+        self.logger.log(logging.WARNING, message)
 
     def create_logger(self, name=""):
         logger = logging.getLogger(name)
@@ -64,7 +64,6 @@ class SocketLogger:
         self.logger.addHandler(file_handler)
 
     def add_socket_logger(self, host, port):
-        print("Creating Socket...")
         self.remote_host = host
         self.remote_port = port
         self.connect_socket(self.remote_host, self.remote_port)
@@ -81,29 +80,28 @@ class SocketLogger:
             self.log_socket = s
 
         except socket.error as e:
-            print("Failed to create Socket: " + str(e))
-            sys.exit()
+            print("ERROR: Failed to create Socket: " + str(e))
 
-        print("Getting IP Address for: " + host)
+            # Bail, will try reconnecting on next message send
+            return
+
         try:
             remote_ip = socket.gethostbyname(host)
         except socket.gaierror as e:
             print("Hostname could not be resolved: " + str(e))
 
-            # TODO: Probably shouldn't straight up bail here
-            sys.exit()
+            # Bail, will try reconnecting on next message send
+            return
 
-        print("Connecting to remote server: " + host + "(" + remote_ip + ")")
         try:
             s.connect((remote_ip, port))
 
             if len(self.log_entry_buffer) > 0:
                 for entry in self.log_entry_buffer:
-                    print("Sending Buffered Message")
                     self.send_log_entry(entry)
 
         except Exception as e:
-            print("--------- Could not connect: " + str(e))
+            print("ERROR: Could not connect: " + str(e))
             if not is_reconnect_attempt:
                 print("Will Attempt a reconnect...")
                 self.reconnect_socket(self.remote_host, self.remote_port)
@@ -131,6 +129,8 @@ class SocketLogger:
                     print("Buffering Message...")
                     self.log_entry_buffer.append(log_entry)
                     print("Total Buffered Messages: " + str(len(self.log_entry_buffer)))
+
+                    # Attempt a new connection
                     self.reconnect_socket(self.remote_host, self.remote_port)
                     break
 
@@ -139,6 +139,6 @@ class SocketLogger:
 
                 total_sent = total_sent + sent
 
-                if sent != len(log_entry):
-                    print("!!!! Partial Message Sent: " + str(sent) + "/" + str(total_sent) + "/" + str(len(log_entry)))
+                # if sent != len(log_entry):
+                #     print("!!!! Partial Message Sent: " + str(sent) + "/" + str(total_sent) + "/" + str(len(log_entry)))
 

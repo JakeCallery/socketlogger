@@ -1,15 +1,17 @@
 TODO:
-Clean up LogToGUI
+Clean up LogToGUI (server side)
   Make a LogToRenderConsole and LogToGUI instead
 
-BUGS:
-Try Reconnect if Server is closed and reopened (sends after server close just fail)
-  (try reconnect if send fails, then resend)
+KNOWN BUGS:
 
-File Logger adds the string "\n", don't manually add that for file or console logging.
-  Should only be there for Socket logging
 
 FINISHED:
 handle log attempt after socket close.
   Maybe use atexit: https://docs.python.org/2/library/atexit.html
   https://docs.python.org/2/library/atexit.html
+
+Try Reconnect if Server is closed and reopened (sends after server close just fail)
+(try reconnect if send fails, then resend)
+
+File Logger adds the string "\n", don't manually add that for file or console logging.
+  Should only be there for Socket logging
