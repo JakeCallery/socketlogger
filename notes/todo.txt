@@ -1,4 +1,6 @@
 TODO:
+Checkbox for auto scroll to bottom
+
 Clean up LogToGUI (server side)
   Make a LogToRenderConsole and LogToGUI instead
 

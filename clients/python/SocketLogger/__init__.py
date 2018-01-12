@@ -88,7 +88,7 @@ class SocketLogger:
         try:
             remote_ip = socket.gethostbyname(host)
         except socket.gaierror as e:
-            print("Hostname could not be resolved: " + str(e))
+            print("ERROR: Hostname could not be resolved: " + str(e))
 
             # Bail, will try reconnecting on next message send
             return
@@ -107,7 +107,7 @@ class SocketLogger:
                 self.reconnect_socket(self.remote_host, self.remote_port)
 
     def reconnect_socket(self, host, port):
-        print ("Attempting Reconnect")
+        print ("Attempting Reconnect...")
         self.connect_socket(host, port, True)
 
     def close_socket_logger(self):
@@ -117,7 +117,7 @@ class SocketLogger:
                 self.log_socket.shutdown(socket.SHUT_RDWR)
                 self.log_socket.close()
             except Exception as e:
-                print("Could Not Close Socket: " + str(e))
+                print("ERROR: Could Not Close Socket: " + str(e))
 
     def send_log_entry(self, log_entry):
             total_sent = 0
@@ -125,7 +125,7 @@ class SocketLogger:
                 try:
                     sent = self.log_socket.send(str(log_entry)[total_sent:])
                 except socket.error as se:
-                    print("Could not send: " + str(se))
+                    print("ERROR: Could not send: " + str(se))
                     print("Buffering Message...")
                     self.log_entry_buffer.append(log_entry)
                     print("Total Buffered Messages: " + str(len(self.log_entry_buffer)))
@@ -137,8 +137,10 @@ class SocketLogger:
                 if sent == 0:
                     raise RuntimeError("Socket Connection Broken")
 
+                # Update sent count
                 total_sent = total_sent + sent
 
+                # Debugging only
                 # if sent != len(log_entry):
                 #     print("!!!! Partial Message Sent: " + str(sent) + "/" + str(total_sent) + "/" + str(len(log_entry)))
 

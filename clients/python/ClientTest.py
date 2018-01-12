@@ -1,7 +1,9 @@
+import logging
 from SocketLogger import SocketLogger
 
 if __name__ == "__main__":
     logger = SocketLogger()
+    #logger = SocketLogger("Neat Logger", log_level=logging.INFO)
     logger.add_console_logger()
     #logger.add_file_logger("test.log")
     logger.add_socket_logger("localhost", 8999)
