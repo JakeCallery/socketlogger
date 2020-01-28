@@ -8,3 +8,4 @@ dist
 *.ogg
 render_dist
 keys
+*.swp
