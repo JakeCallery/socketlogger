@@ -30,6 +30,7 @@ class SocketLogger:
         self.log_socket = None
         self.remote_host = None
         self.remote_port = None
+        self.remaining_socket_connect_retries = -1
         self.log_entry_buffer = []
 
     def log(self, message=""):
@@ -63,9 +64,10 @@ class SocketLogger:
         file_handler.setLevel(self.log_level)
         self.logger.addHandler(file_handler)
 
-    def add_socket_logger(self, host, port):
+    def add_socket_logger(self, host, port, connection_retries=-1):
         self.remote_host = host
         self.remote_port = port
+        self.remaining_socket_connect_retries = connection_retries
         self.connect_socket(self.remote_host, self.remote_port)
 
         #Set up log handler
@@ -123,7 +125,7 @@ class SocketLogger:
             total_sent = 0
             while total_sent < len(log_entry):
                 try:
-                    sent = self.log_socket.send(str(log_entry)[total_sent:])
+                    sent = self.log_socket.send(str(log_entry)[total_sent:].encode('utf-8'))
                 except socket.error as se:
                     print("ERROR: Could not send: " + str(se))
                     print("Buffering Message...")
