@@ -109,8 +109,14 @@ class SocketLogger:
                 self.reconnect_socket(self.remote_host, self.remote_port)
 
     def reconnect_socket(self, host, port):
-        print ("Attempting Reconnect...")
-        self.connect_socket(host, port, True)
+        #-1 means infinite retries
+        if self.remaining_socket_connect_retries != 0:
+            if self.remaining_socket_connect_retries > 0:
+                self.remaining_socket_connect_retries = self.remaining_socket_connect_retries-1
+            print("Attempting Reconnect (Retries Remaining After this one: " + str(self.remaining_socket_connect_retries) + ")...")
+            self.connect_socket(host, port, True)
+        else:
+            print("Exhausted socket retries, not retrying to connect")
 
     def close_socket_logger(self):
         print("Closing Socket Logger...")
@@ -123,7 +129,7 @@ class SocketLogger:
 
     def send_log_entry(self, log_entry):
             total_sent = 0
-            while total_sent < len(log_entry):
+            while total_sent < len(log_entry) and self.remaining_socket_connect_retries != 0:
                 try:
                     sent = self.log_socket.send(str(log_entry)[total_sent:].encode('utf-8'))
                 except socket.error as se:

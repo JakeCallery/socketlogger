@@ -7,7 +7,7 @@ if __name__ == "__main__":
     #logger = SocketLogger("Neat Logger", log_level=logging.INFO)
     logger.add_console_logger()
     #logger.add_file_logger("test.log")
-    logger.add_socket_logger("192.168.1.97", 8999)
+    logger.add_socket_logger(host="192.168.1.97", port=8999, connection_retries=1)
     
     logger.log("Logger Test")
     logger.log("Line 2")
